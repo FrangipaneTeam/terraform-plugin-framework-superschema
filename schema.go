@@ -169,6 +169,7 @@ func updateValidatorsDescription[D validator.Describer](ctx context.Context, val
 		default:
 			description = addToDescription(description, capitalize(toAdd))
 		}
+		description = addEndDot(description)
 	}
 	return description
 }
@@ -193,6 +194,7 @@ func updatePlanModifierDescription[D planmodifier.Describer](ctx context.Context
 			description = addToDescriptionWithDot(description, toAdd)
 		}
 	}
+	description = addEndDot(description)
 	return description
 }
 
