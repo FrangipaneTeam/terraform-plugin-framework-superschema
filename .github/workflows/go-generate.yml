@@ -1,0 +1,25 @@
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - '**'
+      - '!main'
+    paths:
+      - '.github/workflows/go-generate.yml'
+      - 'template.go'
+      - 'type_attribute.go.tmpl'
+name: go-generate
+jobs:
+  go-generate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-go@v4
+      - run: go generate ./...
+      - run: git status --ignored
+      - uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          add_options: '--force'
+          commit_message: 'ci(generate): changes by go generate'
+          file_pattern: '*_attribute.go'
+          skip_dirty_check: true
