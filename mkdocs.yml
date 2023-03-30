@@ -1,0 +1,10 @@
+site_name: Terraform SuperSchema
+
+theme:
+  name: material
+
+nav:
+  - How to use: "getting-started.md"
+  - String: "stringplanmodifier/index.md"
+  - Bool: "boolplanmodifier/index.md"
+  - Int64: "int64planmodifier/index.md"
