@@ -123,7 +123,7 @@ func (s {{ .TypeName }}Attribute) GetDataSource(ctx context.Context) schemaD.Att
 		},
     {{- end }}
 	{{- if (eq .TypeName "SingleNested") }}
-		Attributes: s.Attributes.process(ctx, resourceT).(map[string]schemaD.Attribute),
+		Attributes: s.Attributes.process(ctx, dataSourceT).(map[string]schemaD.Attribute),
     {{- end }}
 	}
 
