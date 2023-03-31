@@ -4,7 +4,9 @@ theme:
   name: material
 
 nav:
-  - How to use: "getting-started.md"
-  - String: "stringplanmodifier/index.md"
-  - Bool: "boolplanmodifier/index.md"
-  - Int64: "int64planmodifier/index.md"
+  - Why ?: "why.md"
+  - How to use it:
+    - "getting-started.md"
+    - Resource doc example: "resource_example.md"
+    - DataSource doc example: "datasource_example.md"
+  - SuperSchema logic : "logic.md"
