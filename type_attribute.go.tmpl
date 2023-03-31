@@ -60,6 +60,9 @@ func (s {{ .TypeName }}Attribute) GetResource(ctx context.Context) schemaR.Attri
 			Attributes: s.Attributes.process(ctx, resourceT).(map[string]schemaR.Attribute),
 		},
     {{- end }}
+	{{- if (eq .TypeName "SingleNested") }}
+		Attributes: s.Attributes.process(ctx, resourceT).(map[string]schemaR.Attribute),
+    {{- end }}
 	}
 
   {{- if or (eq .TypeName "List") (eq .TypeName "Set") }}
