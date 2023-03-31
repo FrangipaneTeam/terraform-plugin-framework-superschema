@@ -15,6 +15,8 @@ github.com/hashicorp/terraform-plugin-go v0.15.0 h1:1BJNSUFs09DS8h/XNyJNJaeusQuW
 github.com/hashicorp/terraform-plugin-go v0.15.0/go.mod h1:tk9E3/Zx4RlF/9FdGAhwxHExqIHHldqiQGt20G6g+nQ=
 github.com/hashicorp/terraform-plugin-log v0.8.0 h1:pX2VQ/TGKu+UU1rCay0OlzosNKe4Nz1pepLXj95oyy0=
 github.com/hashicorp/terraform-plugin-log v0.8.0/go.mod h1:1myFrhVsBLeylQzYYEV17VVjtG8oYPRFdaZs7xdW2xs=
+github.com/iancoleman/strcase v0.2.0 h1:05I4QRnGpI0m37iZQRuskXh+w77mr6Z41lwQzuHLwW0=
+github.com/iancoleman/strcase v0.2.0/go.mod h1:iwCmte+B7n89clKwxIoIXy/HfoL7AsD47ZCWhYzw7ho=
 github.com/mattn/go-colorable v0.1.9/go.mod h1:u6P/XSegPjTcexA+o6vUJrdnUu04hMope9wVRipJSqc=
 github.com/mattn/go-colorable v0.1.12/go.mod h1:u5H1YNBxpqRaxsYJYSkiCWKzEfiAb1Gb520KVy5xxl4=
 github.com/mattn/go-colorable v0.1.13 h1:fFA4WZxdEF4tXPZVKMLwD8oUnCTTo08duU7wxecdEvA=

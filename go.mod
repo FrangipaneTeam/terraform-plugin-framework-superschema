@@ -5,6 +5,7 @@ go 1.20
 require (
 	github.com/hashicorp/terraform-plugin-framework v1.2.0
 	github.com/hashicorp/terraform-plugin-framework-timeouts v0.3.1
+	github.com/iancoleman/strcase v0.2.0
 )
 
 require (
