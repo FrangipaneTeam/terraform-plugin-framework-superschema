@@ -93,7 +93,7 @@ func (s SingleNestedAttribute) GetDataSource(ctx context.Context) schemaD.Attrib
 		MarkdownDescription: computeMarkdownDescription(common, dataSource),
 		Description:         computeDescription(common, dataSource),
 		DeprecationMessage:  computeDeprecationMessage(common, dataSource),
-		Attributes: s.Attributes.process(ctx, resourceT).(map[string]schemaR.Attribute),
+		Attributes: s.Attributes.process(ctx, resourceT).(map[string]schemaD.Attribute),
 	}
 
 	a.Validators = append(a.Validators, common.Validators...)
