@@ -14,6 +14,7 @@ type SingleNestedAttribute struct {
 	Common     *schemaR.SingleNestedAttribute
 	Resource   *schemaR.SingleNestedAttribute
 	DataSource *schemaD.SingleNestedAttribute
+	Attributes Attributes
 }
 
 // IsResource returns true if the attribute is a resource attribute.
