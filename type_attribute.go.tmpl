@@ -14,7 +14,7 @@ type {{ .TypeName }}Attribute struct {
 	Common     *schemaR.{{ .TypeName }}Attribute
 	Resource   *schemaR.{{ .TypeName }}Attribute
 	DataSource *schemaD.{{ .TypeName }}Attribute
-  {{- if or (eq .TypeName "ListNested") (eq .TypeName "SetNested") }}
+  {{- if or (eq .TypeName "ListNested") (eq .TypeName "SetNested") (eq .TypeName "SingleNested") }}
 	Attributes Attributes
   {{- end }}
 }
