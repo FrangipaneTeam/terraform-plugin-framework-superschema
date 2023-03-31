@@ -122,6 +122,9 @@ func (s {{ .TypeName }}Attribute) GetDataSource(ctx context.Context) schemaD.Att
 			Attributes: s.Attributes.process(ctx, dataSourceT).(map[string]schemaD.Attribute),
 		},
     {{- end }}
+	{{- if (eq .TypeName "SingleNested") }}
+		Attributes: s.Attributes.process(ctx, resourceT).(map[string]schemaR.Attribute),
+    {{- end }}
 	}
 
   {{- if or (eq .TypeName "List") (eq .TypeName "Set") }}
