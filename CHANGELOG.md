@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.1](https://github.com/FrangipaneTeam/terraform-plugin-framework-superschema/compare/v1.1.0...v1.1.1) (2023-03-31)
+
+
+### Bug Fixes
+
+* datasource schema ([ec10d41](https://github.com/FrangipaneTeam/terraform-plugin-framework-superschema/commit/ec10d411498e0813b544406fb6e54118ff83db18))
+
 ## [1.1.0](https://github.com/FrangipaneTeam/terraform-plugin-framework-superschema/compare/v1.0.1...v1.1.0) (2023-03-31)
 
 
