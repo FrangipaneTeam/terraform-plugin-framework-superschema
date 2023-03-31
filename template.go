@@ -7,9 +7,9 @@ import (
 	"bytes"
 	_ "embed"
 	"fmt"
+	"go/format"
 	"html/template"
 	"os"
-	"unicode"
 
 	"github.com/iancoleman/strcase"
 )
@@ -33,6 +33,7 @@ func main() {
 		tmpl, err := template.New("template").Parse(templateTypeAttribute)
 		if err != nil {
 			fmt.Printf("error from template parse : %v\n", err)
+			os.Exit(1)
 		}
 
 		var tpl bytes.Buffer
@@ -41,18 +42,19 @@ func main() {
 
 		if errExec != nil {
 			fmt.Printf("error from template execute : %v\n", errExec)
+			os.Exit(1)
 		}
 
-		errWrite := os.WriteFile(t+"_attribute.go", tpl.Bytes(), 0o644)
+		// format the code
+		formattedContent, errFormat := format.Source(tpl.Bytes())
+		if errFormat != nil {
+			fmt.Printf("error from format : %v\n", errFormat)
+			os.Exit(1)
+		}
+
+		errWrite := os.WriteFile(t+"_attribute.go", formattedContent, 0o644)
 		if errWrite != nil {
 			fmt.Printf("write to file error : %v\n", errWrite)
 		}
 	}
-}
-
-// capitalize returns the given string with the first letter capitalized.
-func capitalize(str string) string {
-	runes := []rune(str)
-	runes[0] = unicode.ToUpper(runes[0])
-	return string(runes)
 }

@@ -52,11 +52,11 @@ func (s ListAttribute) GetResource(ctx context.Context) schemaR.Attribute {
 		ElementType:         common.ElementType,
 	}
 
-  if s.Resource != nil {
-    if s.Resource.ElementType != nil {
-      a.ElementType = s.Resource.ElementType
-    }
-  }
+	if s.Resource != nil {
+		if s.Resource.ElementType != nil {
+			a.ElementType = s.Resource.ElementType
+		}
+	}
 
 	a.Validators = append(a.Validators, common.Validators...)
 	a.Validators = append(a.Validators, resource.Validators...)
@@ -101,11 +101,11 @@ func (s ListAttribute) GetDataSource(ctx context.Context) schemaD.Attribute {
 		ElementType:         common.ElementType,
 	}
 
-  if s.DataSource != nil {
-    if s.DataSource.ElementType != nil {
-      a.ElementType = s.DataSource.ElementType
-    }
-  }
+	if s.DataSource != nil {
+		if s.DataSource.ElementType != nil {
+			a.ElementType = s.DataSource.ElementType
+		}
+	}
 
 	a.Validators = append(a.Validators, common.Validators...)
 	a.Validators = append(a.Validators, dataSource.Validators...)
