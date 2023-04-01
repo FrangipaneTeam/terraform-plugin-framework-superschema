@@ -1,5 +1,18 @@
 # Changelog
 
+## [1.2.0](https://github.com/FrangipaneTeam/terraform-plugin-framework-superschema/compare/v1.1.1...v1.2.0) (2023-04-01)
+
+
+### Features
+
+* **template:** add code formatting on generated files  ([#17](https://github.com/FrangipaneTeam/terraform-plugin-framework-superschema/issues/17)) ([3f43c9a](https://github.com/FrangipaneTeam/terraform-plugin-framework-superschema/commit/3f43c9a2a323a02ac4052a988d3755376e5cde0f))
+
+
+### Miscellaneous
+
+* Create CODE_OF_CONDUCT.md ([fd1e970](https://github.com/FrangipaneTeam/terraform-plugin-framework-superschema/commit/fd1e97093f453facdcc08ddc98bf11a88cae4f1b))
+* create LICENCE ([f0d5d24](https://github.com/FrangipaneTeam/terraform-plugin-framework-superschema/commit/f0d5d243c784e0d7113c604fc0c9edd4f7fa8aba))
+
 ## [1.1.1](https://github.com/FrangipaneTeam/terraform-plugin-framework-superschema/compare/v1.1.0...v1.1.1) (2023-03-31)
 
 
