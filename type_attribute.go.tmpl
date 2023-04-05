@@ -14,7 +14,7 @@ type {{ .TypeName }}Attribute struct {
 	Common     *schemaR.{{ .TypeName }}Attribute
 	Resource   *schemaR.{{ .TypeName }}Attribute
 	DataSource *schemaD.{{ .TypeName }}Attribute
-  {{- if or (eq .TypeName "ListNested") (eq .TypeName "SetNested") (eq .TypeName "SingleNested") }}
+  {{- if or (eq .TypeName "ListNested") (eq .TypeName "SetNested") (eq .TypeName "SingleNested") (eq .TypeName "MapNested") }}
 	Attributes Attributes
   {{- end }}
 }
@@ -52,10 +52,10 @@ func (s {{ .TypeName }}Attribute) GetResource(ctx context.Context) schemaR.Attri
 		MarkdownDescription: computeMarkdownDescription(common, resource),
 		Description:         computeDescription(common, resource),
 		DeprecationMessage:  computeDeprecationMessage(common, resource),
-    {{- if or (eq .TypeName "List") (eq .TypeName "Set") }}
+    {{- if or (eq .TypeName "List") (eq .TypeName "Set") (eq .TypeName "Map") }}
 		ElementType:         common.ElementType,
     {{- end }}
-    {{- if or (eq .TypeName "ListNested") (eq .TypeName "SetNested") }}
+    {{- if or (eq .TypeName "ListNested") (eq .TypeName "SetNested") (eq .TypeName "MapNested") }}
 		NestedObject: schemaR.NestedAttributeObject{
 			Attributes: s.Attributes.process(ctx, resourceT).(map[string]schemaR.Attribute),
 		},
@@ -65,7 +65,7 @@ func (s {{ .TypeName }}Attribute) GetResource(ctx context.Context) schemaR.Attri
     {{- end }}
 	}
 
-  {{- if or (eq .TypeName "List") (eq .TypeName "Set") }}
+  {{- if or (eq .TypeName "List") (eq .TypeName "Set") (eq .TypeName "Map") }}
 
   if s.Resource != nil {
     if s.Resource.ElementType != nil {
@@ -114,10 +114,10 @@ func (s {{ .TypeName }}Attribute) GetDataSource(ctx context.Context) schemaD.Att
 		MarkdownDescription: computeMarkdownDescription(common, dataSource),
 		Description:         computeDescription(common, dataSource),
 		DeprecationMessage:  computeDeprecationMessage(common, dataSource),
-    {{- if or (eq .TypeName "List") (eq .TypeName "Set") }}
+    {{- if or (eq .TypeName "List") (eq .TypeName "Set") (eq .TypeName "Map") }}
 		ElementType:         common.ElementType,
     {{- end }}
-    {{- if or (eq .TypeName "ListNested") (eq .TypeName "SetNested") }}
+    {{- if or (eq .TypeName "ListNested") (eq .TypeName "SetNested") (eq .TypeName "MapNested") }}
 		NestedObject: schemaD.NestedAttributeObject{
 			Attributes: s.Attributes.process(ctx, dataSourceT).(map[string]schemaD.Attribute),
 		},
@@ -127,7 +127,7 @@ func (s {{ .TypeName }}Attribute) GetDataSource(ctx context.Context) schemaD.Att
     {{- end }}
 	}
 
-  {{- if or (eq .TypeName "List") (eq .TypeName "Set") }}
+  {{- if or (eq .TypeName "List") (eq .TypeName "Set") (eq .TypeName "Map") }}
 
   if s.DataSource != nil {
     if s.DataSource.ElementType != nil {
