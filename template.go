@@ -23,7 +23,7 @@ var templateTypeAttribute string
 
 func main() {
 	fmt.Println("generating types files...")
-	tA := []string{"string", "bool", "float64", "int64", "list", "list_nested", "object", "set", "set_nested", "number", "single_nested"}
+	tA := []string{"string", "bool", "float64", "int64", "list", "list_nested", "object", "single_nested", "set", "set_nested", "number", "map", "map_nested"}
 
 	for _, t := range tA {
 		infos := templateInfos{

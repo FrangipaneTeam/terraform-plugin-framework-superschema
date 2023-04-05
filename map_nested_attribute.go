@@ -8,32 +8,30 @@ import (
 	schemaR "github.com/hashicorp/terraform-plugin-framework/resource/schema"
 )
 
-var _ Attribute = {{ .TypeName }}Attribute{}
+var _ Attribute = MapNestedAttribute{}
 
-type {{ .TypeName }}Attribute struct {
-	Common     *schemaR.{{ .TypeName }}Attribute
-	Resource   *schemaR.{{ .TypeName }}Attribute
-	DataSource *schemaD.{{ .TypeName }}Attribute
-  {{- if or (eq .TypeName "ListNested") (eq .TypeName "SetNested") (eq .TypeName "SingleNested") (eq .TypeName "MapNested") }}
+type MapNestedAttribute struct {
+	Common     *schemaR.MapNestedAttribute
+	Resource   *schemaR.MapNestedAttribute
+	DataSource *schemaD.MapNestedAttribute
 	Attributes Attributes
-  {{- end }}
 }
 
 // IsResource returns true if the attribute is a resource attribute.
-func (s {{ .TypeName }}Attribute) IsResource() bool {
+func (s MapNestedAttribute) IsResource() bool {
 	return s.Resource != nil || s.Common != nil
 }
 
 // IsDataSource returns true if the attribute is a data source attribute.
-func (s {{ .TypeName }}Attribute) IsDataSource() bool {
+func (s MapNestedAttribute) IsDataSource() bool {
 	return s.DataSource != nil || s.Common != nil
 }
 
 //nolint:dupl
-func (s {{ .TypeName }}Attribute) GetResource(ctx context.Context) schemaR.Attribute {
+func (s MapNestedAttribute) GetResource(ctx context.Context) schemaR.Attribute {
 	var (
-		common   schemaR.{{ .TypeName }}Attribute
-		resource schemaR.{{ .TypeName }}Attribute
+		common   schemaR.MapNestedAttribute
+		resource schemaR.MapNestedAttribute
 	)
 
 	if s.Common != nil {
@@ -44,7 +42,7 @@ func (s {{ .TypeName }}Attribute) GetResource(ctx context.Context) schemaR.Attri
 		resource = *s.Resource
 	}
 
-	a := schemaR.{{ .TypeName }}Attribute{
+	a := schemaR.MapNestedAttribute{
 		Required:            computeIsRequired(common, resource),
 		Optional:            computeIsOptional(common, resource),
 		Computed:            computeIsComputed(common, resource),
@@ -52,27 +50,10 @@ func (s {{ .TypeName }}Attribute) GetResource(ctx context.Context) schemaR.Attri
 		MarkdownDescription: computeMarkdownDescription(common, resource),
 		Description:         computeDescription(common, resource),
 		DeprecationMessage:  computeDeprecationMessage(common, resource),
-    {{- if or (eq .TypeName "List") (eq .TypeName "Set") (eq .TypeName "Map") }}
-		ElementType:         common.ElementType,
-    {{- end }}
-    {{- if or (eq .TypeName "ListNested") (eq .TypeName "SetNested") (eq .TypeName "MapNested") }}
 		NestedObject: schemaR.NestedAttributeObject{
 			Attributes: s.Attributes.process(ctx, resourceT).(map[string]schemaR.Attribute),
 		},
-    {{- end }}
-	{{- if (eq .TypeName "SingleNested") }}
-		Attributes: s.Attributes.process(ctx, resourceT).(map[string]schemaR.Attribute),
-    {{- end }}
 	}
-
-  {{- if or (eq .TypeName "List") (eq .TypeName "Set") (eq .TypeName "Map") }}
-
-  if s.Resource != nil {
-    if s.Resource.ElementType != nil {
-      a.ElementType = s.Resource.ElementType
-    }
-  }
-  {{- end }}
 
 	a.Validators = append(a.Validators, common.Validators...)
 	a.Validators = append(a.Validators, resource.Validators...)
@@ -92,10 +73,10 @@ func (s {{ .TypeName }}Attribute) GetResource(ctx context.Context) schemaR.Attri
 }
 
 //nolint:dupl
-func (s {{ .TypeName }}Attribute) GetDataSource(ctx context.Context) schemaD.Attribute {
+func (s MapNestedAttribute) GetDataSource(ctx context.Context) schemaD.Attribute {
 	var (
-		common     schemaR.{{ .TypeName }}Attribute
-		dataSource schemaD.{{ .TypeName }}Attribute
+		common     schemaR.MapNestedAttribute
+		dataSource schemaD.MapNestedAttribute
 	)
 
 	if s.Common != nil {
@@ -106,7 +87,7 @@ func (s {{ .TypeName }}Attribute) GetDataSource(ctx context.Context) schemaD.Att
 		dataSource = *s.DataSource
 	}
 
-	a := schemaD.{{ .TypeName }}Attribute{
+	a := schemaD.MapNestedAttribute{
 		Required:            computeIsRequired(common, dataSource),
 		Optional:            computeIsOptional(common, dataSource),
 		Computed:            computeIsComputed(common, dataSource),
@@ -114,27 +95,10 @@ func (s {{ .TypeName }}Attribute) GetDataSource(ctx context.Context) schemaD.Att
 		MarkdownDescription: computeMarkdownDescription(common, dataSource),
 		Description:         computeDescription(common, dataSource),
 		DeprecationMessage:  computeDeprecationMessage(common, dataSource),
-    {{- if or (eq .TypeName "List") (eq .TypeName "Set") (eq .TypeName "Map") }}
-		ElementType:         common.ElementType,
-    {{- end }}
-    {{- if or (eq .TypeName "ListNested") (eq .TypeName "SetNested") (eq .TypeName "MapNested") }}
 		NestedObject: schemaD.NestedAttributeObject{
 			Attributes: s.Attributes.process(ctx, dataSourceT).(map[string]schemaD.Attribute),
 		},
-    {{- end }}
-	{{- if (eq .TypeName "SingleNested") }}
-		Attributes: s.Attributes.process(ctx, dataSourceT).(map[string]schemaD.Attribute),
-    {{- end }}
 	}
-
-  {{- if or (eq .TypeName "List") (eq .TypeName "Set") (eq .TypeName "Map") }}
-
-  if s.DataSource != nil {
-    if s.DataSource.ElementType != nil {
-      a.ElementType = s.DataSource.ElementType
-    }
-  }
-  {{- end }}
 
 	a.Validators = append(a.Validators, common.Validators...)
 	a.Validators = append(a.Validators, dataSource.Validators...)
