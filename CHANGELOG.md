@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.3.0](https://github.com/FrangipaneTeam/terraform-plugin-framework-superschema/compare/v1.2.0...v1.3.0) (2023-04-05)
+
+
+### Features
+
+* add map and mapNested ([#20](https://github.com/FrangipaneTeam/terraform-plugin-framework-superschema/issues/20)) ([f84e65e](https://github.com/FrangipaneTeam/terraform-plugin-framework-superschema/commit/f84e65e9c96f989bc135e95c698ebf422ebc457c))
+
 ## [1.2.0](https://github.com/FrangipaneTeam/terraform-plugin-framework-superschema/compare/v1.1.1...v1.2.0) (2023-04-01)
 
 
