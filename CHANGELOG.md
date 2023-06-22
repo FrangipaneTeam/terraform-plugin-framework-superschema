@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.3.2](https://github.com/FrangipaneTeam/terraform-plugin-framework-superschema/compare/v1.3.1...v1.3.2) (2023-06-22)
+
+
+### Miscellaneous
+
+* **deps:** bump github.com/hashicorp/terraform-plugin-framework-timeouts ([#25](https://github.com/FrangipaneTeam/terraform-plugin-framework-superschema/issues/25)) ([d9fa3c8](https://github.com/FrangipaneTeam/terraform-plugin-framework-superschema/commit/d9fa3c8b5c54b7e88470d3ed7dcd864e541bb23b))
+
 ## [1.3.1](https://github.com/FrangipaneTeam/terraform-plugin-framework-superschema/compare/v1.3.0...v1.3.1) (2023-06-19)
 
 
