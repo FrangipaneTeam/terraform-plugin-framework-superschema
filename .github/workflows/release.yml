@@ -1,17 +1,98 @@
+name: Release
+
 on:
   push:
-    branches:
-      - main
-name: release-please
+    tags:
+      - 'v[0-9]+.[0-9]+.[0-9]+*'
+
 jobs:
-  release-please:
+  release-notes:
     runs-on: ubuntu-latest
     steps:
-      - uses: google-github-actions/release-please-action@v3
+      - uses: actions/checkout@c85c95e3d7251135ab7dc9ce3241c5835cc595a9 # v3.5.3 
         with:
-          release-type: simple
-          package-name: release-please-action
-          token: ${{ secrets.GITHUB_TOKEN }}
-          bump-minor-pre-major: true
-          bump-patch-for-minor-pre-major: true
-          changelog-types: '[{"type":"feat","section":"Features","hidden":false},{"type":"fix","section":"Bug Fixes","hidden":false},{"type":"chore","section":"Miscellaneous","hidden":false}]'
+          fetch-depth: 0
+      - name: Generate Release Notes
+        run: |
+          export PREV_TAG=$(git tag --list 'v*' --sort=-version:refname | head -n 2 | tail -n 1)
+          export PREV_VERSION=${PREV_TAG//v}
+          sed -n -e "1{/# /d;}" -e "2{/^$/d;}" -e "/# $PREV_VERSION/q;p" CHANGELOG.md > release-notes.txt
+      - uses: actions/upload-artifact@v3
+        with:
+          name: release-notes
+          path: release-notes.txt
+          retention-days: 1
+
+  make-release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+    - id: release-notes-download
+      name: Release Notes Download
+      uses: actions/download-artifact@9bc31d5ccc31df68ecc42ccf4149144866c47d8a # v3.0.2
+      with:
+        name: release-notes
+        path: /tmp
+    - uses: ncipollo/release-action@a2e71bdd4e7dab70ca26a852f29600c98b33153e # v1.12.0
+      with:
+        bodyFile: "${{ steps.release-notes-download.outputs.download-path }}/release-notes.txt"        
+
+  highest-version-tag:
+    needs: [make-release]
+    runs-on: ubuntu-latest
+    outputs:
+      tag: ${{ steps.highest-version-tag.outputs.tag }}
+    steps:
+      - uses: actions/checkout@c85c95e3d7251135ab7dc9ce3241c5835cc595a9 # v3.5.3 
+        with:
+          # Allow tag to be fetched when ref is a commit
+          fetch-depth: 0
+      - name: Output highest version tag
+        id: highest-version-tag
+        run: |
+          HIGHEST=$(git tag | sort -V | tail -1)
+          echo "tag=$HIGHEST" >> "$GITHUB_OUTPUT"
+
+  changelog-newversion:
+    needs: [make-release, highest-version-tag]
+    # write new changelog header only if release tag is the $HIGHEST i.e. exists on main
+    # and not a backport release branch (e.g. release/3.x). This results in
+    # manually updating the CHANGELOG header if releasing from the non-default branch.
+    # TODO: find a more deterministic way to determine release branch from tag commit
+    if: github.ref_name == needs.highest-version-tag.outputs.tag
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@c85c95e3d7251135ab7dc9ce3241c5835cc595a9 # v3.5.3 
+        with:
+          fetch-depth: 0
+          ref: main
+      - name: Update Changelog Header
+        run: |
+          CHANGELOG_FILE_NAME="CHANGELOG.md"
+          PREVIOUS_RELEASE_TAG=${{ github.ref_name }}
+
+          # Add Release Date
+          RELEASE_DATE=`date +%B' '%e', '%Y`
+          sed -i -e "1 s/Unreleased/$RELEASE_DATE/" $CHANGELOG_FILE_NAME
+
+          # Prepend next release line
+          echo Previous release is: $PREVIOUS_RELEASE_TAG
+
+          NEW_RELEASE_LINE=$(echo $PREVIOUS_RELEASE_TAG | awk -F. '{
+              $1 = substr($1,2)
+              $2 += 1
+              printf("%s.%01d.0\n\n", $1, $2);
+          }')
+
+          echo New minor version is: v$NEW_RELEASE_LINE
+
+          echo -e "## $NEW_RELEASE_LINE (Unreleased)\n$(cat $CHANGELOG_FILE_NAME)" > $CHANGELOG_FILE_NAME
+      - run: |
+            git config --local user.email changelogbot@frangipane.io
+            git config --local user.name changelogbot
+            git add CHANGELOG.md
+            git commit -m "Update CHANGELOG.md after ${{ github.ref_name }}"
+            git push
