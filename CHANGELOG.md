@@ -1,7 +1,6 @@
-# Changelog
+## 1.4.0 (Unreleased)
 
 ## [1.3.1](https://github.com/FrangipaneTeam/terraform-plugin-framework-superschema/compare/v1.3.0...v1.3.1) (2023-06-19)
-
 
 ### Miscellaneous
 
@@ -9,18 +8,15 @@
 
 ## [1.3.0](https://github.com/FrangipaneTeam/terraform-plugin-framework-superschema/compare/v1.2.0...v1.3.0) (2023-04-05)
 
-
 ### Features
 
 * add map and mapNested ([#20](https://github.com/FrangipaneTeam/terraform-plugin-framework-superschema/issues/20)) ([f84e65e](https://github.com/FrangipaneTeam/terraform-plugin-framework-superschema/commit/f84e65e9c96f989bc135e95c698ebf422ebc457c))
 
 ## [1.2.0](https://github.com/FrangipaneTeam/terraform-plugin-framework-superschema/compare/v1.1.1...v1.2.0) (2023-04-01)
 
-
 ### Features
 
 * **template:** add code formatting on generated files  ([#17](https://github.com/FrangipaneTeam/terraform-plugin-framework-superschema/issues/17)) ([3f43c9a](https://github.com/FrangipaneTeam/terraform-plugin-framework-superschema/commit/3f43c9a2a323a02ac4052a988d3755376e5cde0f))
-
 
 ### Miscellaneous
 
@@ -29,19 +25,16 @@
 
 ## [1.1.1](https://github.com/FrangipaneTeam/terraform-plugin-framework-superschema/compare/v1.1.0...v1.1.1) (2023-03-31)
 
-
 ### Bug Fixes
 
 * datasource schema ([ec10d41](https://github.com/FrangipaneTeam/terraform-plugin-framework-superschema/commit/ec10d411498e0813b544406fb6e54118ff83db18))
 
 ## [1.1.0](https://github.com/FrangipaneTeam/terraform-plugin-framework-superschema/compare/v1.0.1...v1.1.0) (2023-03-31)
 
-
 ### Features
 
 * add SingleNested ([81be9d9](https://github.com/FrangipaneTeam/terraform-plugin-framework-superschema/commit/81be9d95f84c7f66b39983c0669b6fc73e239353))
 * add SingleNested ([0a466ef](https://github.com/FrangipaneTeam/terraform-plugin-framework-superschema/commit/0a466ef35da8a765ec1aaa1312f4f445e7363440))
-
 
 ### Bug Fixes
 
@@ -50,13 +43,11 @@
 
 ## [1.0.1](https://github.com/FrangipaneTeam/terraform-plugin-framework-superschema/compare/v1.0.0...v1.0.1) (2023-03-30)
 
-
 ### Bug Fixes
 
 * missing dot on validators and pm markdown desc ([#4](https://github.com/FrangipaneTeam/terraform-plugin-framework-superschema/issues/4)) ([edd7a37](https://github.com/FrangipaneTeam/terraform-plugin-framework-superschema/commit/edd7a374cc73b575188a853bed51dea81e28f910))
 
 ## 1.0.0 (2023-03-30)
-
 
 ### Features
 
