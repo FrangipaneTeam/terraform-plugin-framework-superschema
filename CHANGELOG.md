@@ -1,18 +1,18 @@
 ## 1.4.0 (Unreleased)
 
-## [1.3.1](https://github.com/FrangipaneTeam/terraform-plugin-framework-superschema/compare/v1.3.0...v1.3.1) (2023-06-19)
+## 1.3.1 (2023-06-19)
 
 ### Miscellaneous
 
 * **deps:** bump github.com/hashicorp/terraform-plugin-framework ([#23](https://github.com/FrangipaneTeam/terraform-plugin-framework-superschema/issues/23)) ([7662330](https://github.com/FrangipaneTeam/terraform-plugin-framework-superschema/commit/7662330ea453baedcb343d5e37a1fb929854d68b))
 
-## [1.3.0](https://github.com/FrangipaneTeam/terraform-plugin-framework-superschema/compare/v1.2.0...v1.3.0) (2023-04-05)
+## 1.3.0 (2023-04-05)
 
 ### Features
 
 * add map and mapNested ([#20](https://github.com/FrangipaneTeam/terraform-plugin-framework-superschema/issues/20)) ([f84e65e](https://github.com/FrangipaneTeam/terraform-plugin-framework-superschema/commit/f84e65e9c96f989bc135e95c698ebf422ebc457c))
 
-## [1.2.0](https://github.com/FrangipaneTeam/terraform-plugin-framework-superschema/compare/v1.1.1...v1.2.0) (2023-04-01)
+## 1.2.0 (2023-04-01)
 
 ### Features
 
@@ -23,13 +23,13 @@
 * Create CODE_OF_CONDUCT.md ([fd1e970](https://github.com/FrangipaneTeam/terraform-plugin-framework-superschema/commit/fd1e97093f453facdcc08ddc98bf11a88cae4f1b))
 * create LICENCE ([f0d5d24](https://github.com/FrangipaneTeam/terraform-plugin-framework-superschema/commit/f0d5d243c784e0d7113c604fc0c9edd4f7fa8aba))
 
-## [1.1.1](https://github.com/FrangipaneTeam/terraform-plugin-framework-superschema/compare/v1.1.0...v1.1.1) (2023-03-31)
+## 1.1.1 (2023-03-31)
 
 ### Bug Fixes
 
 * datasource schema ([ec10d41](https://github.com/FrangipaneTeam/terraform-plugin-framework-superschema/commit/ec10d411498e0813b544406fb6e54118ff83db18))
 
-## [1.1.0](https://github.com/FrangipaneTeam/terraform-plugin-framework-superschema/compare/v1.0.1...v1.1.0) (2023-03-31)
+## 1.1.0 (2023-03-31)
 
 ### Features
 
@@ -41,7 +41,7 @@
 * change struct ([19d3d7a](https://github.com/FrangipaneTeam/terraform-plugin-framework-superschema/commit/19d3d7af3aa83b2469a1046f7d3c46e53471958f))
 * schemaD attribute ([ca4a517](https://github.com/FrangipaneTeam/terraform-plugin-framework-superschema/commit/ca4a5177dbf3744f6af28f41c65bcca3d5db6a09))
 
-## [1.0.1](https://github.com/FrangipaneTeam/terraform-plugin-framework-superschema/compare/v1.0.0...v1.0.1) (2023-03-30)
+## 1.0.1 (2023-03-30)
 
 ### Bug Fixes
 
