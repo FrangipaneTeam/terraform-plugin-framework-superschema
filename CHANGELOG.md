@@ -1,5 +1,9 @@
 ## 1.4.0 (Unreleased)
 
+### :dependabot: **Dependencies**
+
+* deps: bumps github.com/hashicorp/terraform-plugin-framework-timeouts from 0.3.1 to 0.4.0 ([GH-25](https://github.com/orange-cloudavenue/terraform-provider-cloudavenue/issues/25))
+
 ## 1.3.1 (2023-06-19)
 
 ### Miscellaneous
