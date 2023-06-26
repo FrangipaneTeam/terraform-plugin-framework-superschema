@@ -1,4 +1,5 @@
 ## 1.4.0 (Unreleased)
+## 1.3.2 (June 26, 2023)
 
 ### :dependabot: **Dependencies**
 
