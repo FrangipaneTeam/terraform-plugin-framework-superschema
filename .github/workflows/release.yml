@@ -69,6 +69,7 @@ jobs:
         with:
           fetch-depth: 0
           ref: main
+          token: ${{ secrets.CHANGELOG_PAT }}
       - name: Update Changelog Header
         run: |
           CHANGELOG_FILE_NAME="CHANGELOG.md"
