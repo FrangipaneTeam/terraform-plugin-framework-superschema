@@ -7,12 +7,12 @@ github.com/fatih/color v1.15.0/go.mod h1:0h5ZqXfHYED7Bhv2ZJamyIOUej9KtShiJESRwBD
 github.com/google/go-cmp v0.5.9 h1:O2Tfq5qg4qc4AmwVlvv0oLiVAGB7enBSJ2x2DqQFi38=
 github.com/hashicorp/go-hclog v1.5.0 h1:bI2ocEMgcVlz55Oj1xZNBsVi900c7II+fWDyV9o+13c=
 github.com/hashicorp/go-hclog v1.5.0/go.mod h1:W4Qnvbt70Wk/zYJryRzDRU/4r0kIg0PVHBcfoyhpF5M=
-github.com/hashicorp/terraform-plugin-framework v1.3.1 h1:uhd+SuyuDq3oh5VB2Toq5IPyaC5XFAUf9vUFKBmNNOk=
-github.com/hashicorp/terraform-plugin-framework v1.3.1/go.mod h1:A1WD3Ry7FhrThViUTbkx4ZDsMq9oaAv4U9oTI8bBzCU=
+github.com/hashicorp/terraform-plugin-framework v1.3.2 h1:aQ6GSD0CTnvoALEWvKAkcH/d8jqSE0Qq56NYEhCexUs=
+github.com/hashicorp/terraform-plugin-framework v1.3.2/go.mod h1:oimsRAPJOYkZ4kY6xIGfR0PHjpHLDLaknzuptl6AvnY=
 github.com/hashicorp/terraform-plugin-framework-timeouts v0.4.0 h1:9buCmO0ciBITSCuw5ag6RdOwSsnBMl7OxOKOyXvRiZM=
 github.com/hashicorp/terraform-plugin-framework-timeouts v0.4.0/go.mod h1:kW0Wl17bODmZyj+Fiz9dNk1MXjPB+qG3wAs2d++J9w4=
-github.com/hashicorp/terraform-plugin-go v0.16.0 h1:DSOQ0rz5FUiVO4NUzMs8ln9gsPgHMTsfns7Nk+6gPuE=
-github.com/hashicorp/terraform-plugin-go v0.16.0/go.mod h1:4sn8bFuDbt+2+Yztt35IbOrvZc0zyEi87gJzsTgCES8=
+github.com/hashicorp/terraform-plugin-go v0.17.0 h1:OpqgPLvjW3vCDA9VUEmRKppCZOG/+Vkdp6ijkG8aJek=
+github.com/hashicorp/terraform-plugin-go v0.17.0/go.mod h1:l7VK+2u5Kf2y+A+742GX0ouLut3gttudmvMgN0PA74Y=
 github.com/hashicorp/terraform-plugin-log v0.9.0 h1:i7hOA+vdAItN1/7UrfBqBwvYPQ9TFvymaRGZED3FCV0=
 github.com/hashicorp/terraform-plugin-log v0.9.0/go.mod h1:rKL8egZQ/eXSyDqzLUuwUYLVdlYeamldAHSxjUFADow=
 github.com/iancoleman/strcase v0.2.0 h1:05I4QRnGpI0m37iZQRuskXh+w77mr6Z41lwQzuHLwW0=

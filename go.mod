@@ -3,7 +3,7 @@ module github.com/FrangipaneTeam/terraform-plugin-framework-superschema
 go 1.20
 
 require (
-	github.com/hashicorp/terraform-plugin-framework v1.3.1
+	github.com/hashicorp/terraform-plugin-framework v1.3.2
 	github.com/hashicorp/terraform-plugin-framework-timeouts v0.4.0
 	github.com/iancoleman/strcase v0.2.0
 )
@@ -11,7 +11,7 @@ require (
 require (
 	github.com/fatih/color v1.15.0 // indirect
 	github.com/hashicorp/go-hclog v1.5.0 // indirect
-	github.com/hashicorp/terraform-plugin-go v0.16.0 // indirect
+	github.com/hashicorp/terraform-plugin-go v0.17.0 // indirect
 	github.com/hashicorp/terraform-plugin-log v0.9.0 // indirect
 	github.com/mattn/go-colorable v0.1.13 // indirect
 	github.com/mattn/go-isatty v0.0.18 // indirect
