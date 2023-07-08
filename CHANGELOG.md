@@ -1,4 +1,10 @@
 ## 1.4.0 (Unreleased)
+
+### :dependabot: **Dependencies**
+
+* deps: bumps dependabot/fetch-metadata from 1.5.1 to 1.6.0 ([GH-31](https://github.com/orange-cloudavenue/terraform-provider-cloudavenue/issues/31))
+* deps: bumps github.com/hashicorp/terraform-plugin-framework-timeouts from 0.4.0 to 0.4.1 ([GH-33](https://github.com/orange-cloudavenue/terraform-provider-cloudavenue/issues/33))
+
 ## 1.3.2 (June 26, 2023)
 
 ### :dependabot: **Dependencies**
