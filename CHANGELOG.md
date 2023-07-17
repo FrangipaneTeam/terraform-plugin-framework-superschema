@@ -1,4 +1,9 @@
 ## 1.4.0 (Unreleased)
+
+### :dependabot: **Dependencies**
+
+* deps: bumps github.com/iancoleman/strcase from 0.2.0 to 0.3.0 ([GH-34](https://github.com/orange-cloudavenue/terraform-provider-cloudavenue/issues/34))
+
 ## 1.3.3 (July  8, 2023)
 
 ### :dependabot: **Dependencies**
