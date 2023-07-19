@@ -1,5 +1,9 @@
 ## 1.4.0 (Unreleased)
 
+### :rocket: **New Features**
+
+* `SuperTypes` - Add new attributes `Super` ([GH-37](https://github.com/orange-cloudavenue/terraform-provider-cloudavenue/issues/37))
+
 ### :dependabot: **Dependencies**
 
 * deps: bumps github.com/iancoleman/strcase from 0.2.0 to 0.3.0 ([GH-34](https://github.com/orange-cloudavenue/terraform-provider-cloudavenue/issues/34))
