@@ -1,5 +1,5 @@
-github.com/FrangipaneTeam/terraform-plugin-framework-supertypes v0.0.4 h1:dOefz0SxbR8LPqliCFaTQuGulXwuWBOWQE8MWj+4M80=
-github.com/FrangipaneTeam/terraform-plugin-framework-supertypes v0.0.4/go.mod h1:2odt8NV8oEXmS26A3MVrk99oNOnPe9oUE1l5yknkUD4=
+github.com/FrangipaneTeam/terraform-plugin-framework-supertypes v0.0.5 h1:Cz5wnn5hXVeE5ibqi1K9ntrNicpYtHhqxY3cYnxqxVM=
+github.com/FrangipaneTeam/terraform-plugin-framework-supertypes v0.0.5/go.mod h1:2odt8NV8oEXmS26A3MVrk99oNOnPe9oUE1l5yknkUD4=
 github.com/davecgh/go-spew v1.1.0/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/davecgh/go-spew v1.1.1 h1:vj9j/u1bqnvCEfJOwUhtlOARqs3+rkHYY13jYWTU97c=
 github.com/davecgh/go-spew v1.1.1/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
