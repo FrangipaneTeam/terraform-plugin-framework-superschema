@@ -4,8 +4,10 @@ package superschema
 import (
 	"context"
 
+	"github.com/FrangipaneTeam/terraform-plugin-framework-supertypes"
 	schemaD "github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	schemaR "github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
 )
 
 var _ Attribute = SuperNumberAttribute{}
@@ -24,6 +26,13 @@ func (s SuperNumberAttribute) IsResource() bool {
 // IsDataSource returns true if the attribute is a data source attribute.
 func (s SuperNumberAttribute) IsDataSource() bool {
 	return s.DataSource != nil || s.Common != nil
+}
+
+// GetCustomType returns the custom type of the attribute.
+func (s SuperNumberAttribute) getCustomType() basetypes.NumberTypable {
+	return supertypes.NumberType{
+		NumberType: basetypes.NumberType{},
+	}
 }
 
 //nolint:dupl
@@ -72,6 +81,10 @@ func (s SuperNumberAttribute) GetResource(ctx context.Context) schemaR.Attribute
 		if s.Resource.CustomType != nil {
 			a.CustomType = s.Resource.CustomType
 		}
+	}
+	// * If user has not provided a custom type, we will use the default supertypes
+	if a.CustomType == nil {
+		a.CustomType = s.getCustomType().(supertypes.NumberType)
 	}
 
 	a.MarkdownDescription = genResourceAttrDescription(ctx, a.MarkdownDescription, defaultVDescription, a.Validators, a.PlanModifiers)

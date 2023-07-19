@@ -33,8 +33,10 @@ func (s SuperSingleNestedAttribute) IsDataSource() bool {
 
 // GetCustomType returns the custom type of the attribute.
 func (s SuperSingleNestedAttribute) getCustomType(aT map[string]attr.Type) basetypes.ObjectTypable {
-	return types.ObjectType{
-		AttrTypes: aT,
+	return supertypes.SingleNestedType{
+		ObjectType: types.ObjectType{
+			AttrTypes: aT,
+		},
 	}
 }
 

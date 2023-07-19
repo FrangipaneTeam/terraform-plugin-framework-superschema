@@ -4,8 +4,10 @@ package superschema
 import (
 	"context"
 
+	"github.com/FrangipaneTeam/terraform-plugin-framework-supertypes"
 	schemaD "github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	schemaR "github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
 )
 
 var _ Attribute = SuperObjectAttribute{}
@@ -24,6 +26,13 @@ func (s SuperObjectAttribute) IsResource() bool {
 // IsDataSource returns true if the attribute is a data source attribute.
 func (s SuperObjectAttribute) IsDataSource() bool {
 	return s.DataSource != nil || s.Common != nil
+}
+
+// GetCustomType returns the custom type of the attribute.
+func (s SuperObjectAttribute) getCustomType() basetypes.ObjectTypable {
+	return supertypes.ObjectType{
+		ObjectType: basetypes.ObjectType{},
+	}
 }
 
 //nolint:dupl
