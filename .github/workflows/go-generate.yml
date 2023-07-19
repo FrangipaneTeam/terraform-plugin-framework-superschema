@@ -7,7 +7,7 @@ on:
     paths:
       - '.github/workflows/go-generate.yml'
       - 'template.go'
-      - 'type_attribute.go.tmpl'
+      - '*.go.tmpl'
 name: go-generate
 jobs:
   go-generate:
