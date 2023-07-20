@@ -144,8 +144,18 @@ func (s SuperSingleNestedAttribute) GetDataSource(ctx context.Context) schemaD.A
 			a.CustomType = s.DataSource.CustomType
 		}
 	}
+	// * If user has not provided a custom type, we will use the default supertypes
+	if a.CustomType == nil {
+		attrTypes := make(map[string]attr.Type, len(a.Attributes))
+
+		for name, attribute := range a.Attributes {
+			attrTypes[name] = attribute.GetType()
+		}
+
+		a.CustomType = s.getCustomType(attrTypes).(supertypes.SingleNestedType)
+
+	}
 
 	a.MarkdownDescription = genDataSourceAttrDescription(ctx, a.MarkdownDescription, a.Validators)
-
 	return a
 }
