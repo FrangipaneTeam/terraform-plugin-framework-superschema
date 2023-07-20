@@ -310,7 +310,41 @@ func (s Super{{ .TypeName }}Attribute) GetDataSource(ctx context.Context) schema
 	}
 	{{- end }}
 
-	a.MarkdownDescription = genDataSourceAttrDescription(ctx, a.MarkdownDescription, a.Validators)
+{{- if or (eq .TypeName "ListNested") (eq .TypeName "SetNested") (eq .TypeName "MapNested") }}
+	// * If user has not provided a custom type, we will use the default supertypes
+	if a.CustomType == nil {
+		a.CustomType = s.getCustomType(a.NestedObject.Type()).(supertypes.{{ .TypeName }}Type)
+	}
+    {{- end }}
 
+	{{- if or (eq .TypeName "SingleNested") }}
+	// * If user has not provided a custom type, we will use the default supertypes
+	if a.CustomType == nil {
+		attrTypes := make(map[string]attr.Type, len(a.Attributes))
+
+		for name, attribute := range a.Attributes {
+			attrTypes[name] = attribute.GetType()
+		}
+
+		a.CustomType = s.getCustomType(attrTypes).(supertypes.{{ .TypeName }}Type)
+
+	}
+    {{- end }}
+
+    {{- if or (eq .TypeName "List") (eq .TypeName "Set") (eq .TypeName "Map") }}
+	// * If user has not provided a custom type, we will use the default supertypes
+	if a.CustomType == nil {
+		a.CustomType = s.getCustomType(a.ElementType).(supertypes.{{ .TypeName }}Type)
+	}
+	{{- end }}
+
+    {{- if or (eq .TypeName "String") (eq .TypeName "Bool") (eq .TypeName "Int64") (eq .TypeName "Float64") (eq .TypeName "Number") }}
+	// * If user has not provided a custom type, we will use the default supertypes
+	if a.CustomType == nil {
+		a.CustomType = s.getCustomType().(supertypes.{{ .TypeName }}Type)
+	}
+	{{- end }}
+
+	a.MarkdownDescription = genDataSourceAttrDescription(ctx, a.MarkdownDescription, a.Validators)
 	return a
 }
