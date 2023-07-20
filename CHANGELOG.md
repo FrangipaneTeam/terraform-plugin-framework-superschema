@@ -1,4 +1,9 @@
 ## 1.5.0 (Unreleased)
+
+### :bug: **Bug Fixes**
+
+* `DataSource` - Fix `DataSource` generation for `Super`attributes. ([GH-38](https://github.com/orange-cloudavenue/terraform-provider-cloudavenue/issues/38))
+
 ## 1.4.0 (July 19, 2023)
 
 ### :rocket: **New Features**
