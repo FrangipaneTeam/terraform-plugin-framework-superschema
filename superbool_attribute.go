@@ -130,8 +130,11 @@ func (s SuperBoolAttribute) GetDataSource(ctx context.Context) schemaD.Attribute
 			a.CustomType = s.DataSource.CustomType
 		}
 	}
+	// * If user has not provided a custom type, we will use the default supertypes
+	if a.CustomType == nil {
+		a.CustomType = s.getCustomType().(supertypes.BoolType)
+	}
 
 	a.MarkdownDescription = genDataSourceAttrDescription(ctx, a.MarkdownDescription, a.Validators)
-
 	return a
 }

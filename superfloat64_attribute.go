@@ -130,8 +130,11 @@ func (s SuperFloat64Attribute) GetDataSource(ctx context.Context) schemaD.Attrib
 			a.CustomType = s.DataSource.CustomType
 		}
 	}
+	// * If user has not provided a custom type, we will use the default supertypes
+	if a.CustomType == nil {
+		a.CustomType = s.getCustomType().(supertypes.Float64Type)
+	}
 
 	a.MarkdownDescription = genDataSourceAttrDescription(ctx, a.MarkdownDescription, a.Validators)
-
 	return a
 }

@@ -143,8 +143,11 @@ func (s SuperMapNestedAttribute) GetDataSource(ctx context.Context) schemaD.Attr
 	if a.CustomType == nil {
 		a.CustomType = s.getCustomType(a.NestedObject.Type()).(supertypes.MapNestedType)
 	}
+	// * If user has not provided a custom type, we will use the default supertypes
+	if a.CustomType == nil {
+		a.CustomType = s.getCustomType(a.NestedObject.Type()).(supertypes.MapNestedType)
+	}
 
 	a.MarkdownDescription = genDataSourceAttrDescription(ctx, a.MarkdownDescription, a.Validators)
-
 	return a
 }

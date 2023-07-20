@@ -128,6 +128,5 @@ func (s SuperObjectAttribute) GetDataSource(ctx context.Context) schemaD.Attribu
 	}
 
 	a.MarkdownDescription = genDataSourceAttrDescription(ctx, a.MarkdownDescription, a.Validators)
-
 	return a
 }
