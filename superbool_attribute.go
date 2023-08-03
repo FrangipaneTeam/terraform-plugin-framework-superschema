@@ -13,6 +13,7 @@ import (
 var _ Attribute = SuperBoolAttribute{}
 
 type SuperBoolAttribute struct {
+	Deprecated *Deprecated
 	Common     *schemaR.BoolAttribute
 	Resource   *schemaR.BoolAttribute
 	DataSource *schemaD.BoolAttribute
@@ -87,7 +88,13 @@ func (s SuperBoolAttribute) GetResource(ctx context.Context) schemaR.Attribute {
 		a.CustomType = s.getCustomType().(supertypes.BoolType)
 	}
 
-	a.MarkdownDescription = genResourceAttrDescription(ctx, a.MarkdownDescription, defaultVDescription, a.Validators, a.PlanModifiers)
+	deprecationMessage := ""
+	if s.Deprecated != nil {
+		a.DeprecationMessage = s.Deprecated.DeprecationMessage
+		deprecationMessage = s.Deprecated.computeDeprecatedDocumentation()
+	}
+
+	a.MarkdownDescription = genResourceAttrDescription(ctx, a.MarkdownDescription, defaultVDescription, deprecationMessage, a.Validators, a.PlanModifiers)
 	return a
 }
 
@@ -135,6 +142,12 @@ func (s SuperBoolAttribute) GetDataSource(ctx context.Context) schemaD.Attribute
 		a.CustomType = s.getCustomType().(supertypes.BoolType)
 	}
 
-	a.MarkdownDescription = genDataSourceAttrDescription(ctx, a.MarkdownDescription, a.Validators)
+	deprecationMessage := ""
+	if s.Deprecated != nil {
+		a.DeprecationMessage = s.Deprecated.DeprecationMessage
+		deprecationMessage = s.Deprecated.computeDeprecatedDocumentation()
+	}
+
+	a.MarkdownDescription = genDataSourceAttrDescription(ctx, a.MarkdownDescription, deprecationMessage, a.Validators)
 	return a
 }

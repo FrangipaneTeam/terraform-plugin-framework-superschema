@@ -13,6 +13,7 @@ import (
 var _ Attribute = SuperObjectAttribute{}
 
 type SuperObjectAttribute struct {
+	Deprecated *Deprecated
 	Common     *schemaR.ObjectAttribute
 	Resource   *schemaR.ObjectAttribute
 	DataSource *schemaD.ObjectAttribute
@@ -83,7 +84,13 @@ func (s SuperObjectAttribute) GetResource(ctx context.Context) schemaR.Attribute
 		}
 	}
 
-	a.MarkdownDescription = genResourceAttrDescription(ctx, a.MarkdownDescription, defaultVDescription, a.Validators, a.PlanModifiers)
+	deprecationMessage := ""
+	if s.Deprecated != nil {
+		a.DeprecationMessage = s.Deprecated.DeprecationMessage
+		deprecationMessage = s.Deprecated.computeDeprecatedDocumentation()
+	}
+
+	a.MarkdownDescription = genResourceAttrDescription(ctx, a.MarkdownDescription, defaultVDescription, deprecationMessage, a.Validators, a.PlanModifiers)
 	return a
 }
 
@@ -127,6 +134,12 @@ func (s SuperObjectAttribute) GetDataSource(ctx context.Context) schemaD.Attribu
 		}
 	}
 
-	a.MarkdownDescription = genDataSourceAttrDescription(ctx, a.MarkdownDescription, a.Validators)
+	deprecationMessage := ""
+	if s.Deprecated != nil {
+		a.DeprecationMessage = s.Deprecated.DeprecationMessage
+		deprecationMessage = s.Deprecated.computeDeprecatedDocumentation()
+	}
+
+	a.MarkdownDescription = genDataSourceAttrDescription(ctx, a.MarkdownDescription, deprecationMessage, a.Validators)
 	return a
 }

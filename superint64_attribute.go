@@ -13,6 +13,7 @@ import (
 var _ Attribute = SuperInt64Attribute{}
 
 type SuperInt64Attribute struct {
+	Deprecated *Deprecated
 	Common     *schemaR.Int64Attribute
 	Resource   *schemaR.Int64Attribute
 	DataSource *schemaD.Int64Attribute
@@ -87,7 +88,13 @@ func (s SuperInt64Attribute) GetResource(ctx context.Context) schemaR.Attribute 
 		a.CustomType = s.getCustomType().(supertypes.Int64Type)
 	}
 
-	a.MarkdownDescription = genResourceAttrDescription(ctx, a.MarkdownDescription, defaultVDescription, a.Validators, a.PlanModifiers)
+	deprecationMessage := ""
+	if s.Deprecated != nil {
+		a.DeprecationMessage = s.Deprecated.DeprecationMessage
+		deprecationMessage = s.Deprecated.computeDeprecatedDocumentation()
+	}
+
+	a.MarkdownDescription = genResourceAttrDescription(ctx, a.MarkdownDescription, defaultVDescription, deprecationMessage, a.Validators, a.PlanModifiers)
 	return a
 }
 
@@ -135,6 +142,12 @@ func (s SuperInt64Attribute) GetDataSource(ctx context.Context) schemaD.Attribut
 		a.CustomType = s.getCustomType().(supertypes.Int64Type)
 	}
 
-	a.MarkdownDescription = genDataSourceAttrDescription(ctx, a.MarkdownDescription, a.Validators)
+	deprecationMessage := ""
+	if s.Deprecated != nil {
+		a.DeprecationMessage = s.Deprecated.DeprecationMessage
+		deprecationMessage = s.Deprecated.computeDeprecatedDocumentation()
+	}
+
+	a.MarkdownDescription = genDataSourceAttrDescription(ctx, a.MarkdownDescription, deprecationMessage, a.Validators)
 	return a
 }

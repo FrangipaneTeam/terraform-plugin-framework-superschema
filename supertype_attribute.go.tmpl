@@ -21,6 +21,7 @@ import (
 var _ Attribute = Super{{ .TypeName }}Attribute{}
 
 type Super{{ .TypeName }}Attribute struct {
+	Deprecated *Deprecated
 	Common     *schemaR.{{ .TypeName }}Attribute
 	Resource   *schemaR.{{ .TypeName }}Attribute
 	DataSource *schemaD.{{ .TypeName }}Attribute
@@ -233,7 +234,13 @@ func (s Super{{ .TypeName }}Attribute) GetResource(ctx context.Context) schemaR.
 	}
 	{{- end }}
 
-	a.MarkdownDescription = genResourceAttrDescription(ctx, a.MarkdownDescription, defaultVDescription, a.Validators, a.PlanModifiers)
+	deprecationMessage := ""
+	if s.Deprecated != nil {
+		a.DeprecationMessage = s.Deprecated.DeprecationMessage
+		deprecationMessage = s.Deprecated.computeDeprecatedDocumentation()
+	}
+
+	a.MarkdownDescription = genResourceAttrDescription(ctx, a.MarkdownDescription, defaultVDescription, deprecationMessage, a.Validators, a.PlanModifiers)
 	return a
 }
 
@@ -345,6 +352,12 @@ func (s Super{{ .TypeName }}Attribute) GetDataSource(ctx context.Context) schema
 	}
 	{{- end }}
 
-	a.MarkdownDescription = genDataSourceAttrDescription(ctx, a.MarkdownDescription, a.Validators)
+	deprecationMessage := ""
+	if s.Deprecated != nil {
+		a.DeprecationMessage = s.Deprecated.DeprecationMessage
+		deprecationMessage = s.Deprecated.computeDeprecatedDocumentation()
+	}
+
+	a.MarkdownDescription = genDataSourceAttrDescription(ctx, a.MarkdownDescription, deprecationMessage, a.Validators)
 	return a
 }

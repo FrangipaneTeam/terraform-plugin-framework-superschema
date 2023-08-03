@@ -13,6 +13,7 @@ import (
 var _ Attribute = SuperMapNestedAttribute{}
 
 type SuperMapNestedAttribute struct {
+	Deprecated *Deprecated
 	Common     *schemaR.MapNestedAttribute
 	Resource   *schemaR.MapNestedAttribute
 	DataSource *schemaD.MapNestedAttribute
@@ -93,7 +94,13 @@ func (s SuperMapNestedAttribute) GetResource(ctx context.Context) schemaR.Attrib
 		a.CustomType = s.getCustomType(a.NestedObject.Type()).(supertypes.MapNestedType)
 	}
 
-	a.MarkdownDescription = genResourceAttrDescription(ctx, a.MarkdownDescription, defaultVDescription, a.Validators, a.PlanModifiers)
+	deprecationMessage := ""
+	if s.Deprecated != nil {
+		a.DeprecationMessage = s.Deprecated.DeprecationMessage
+		deprecationMessage = s.Deprecated.computeDeprecatedDocumentation()
+	}
+
+	a.MarkdownDescription = genResourceAttrDescription(ctx, a.MarkdownDescription, defaultVDescription, deprecationMessage, a.Validators, a.PlanModifiers)
 	return a
 }
 
@@ -148,6 +155,12 @@ func (s SuperMapNestedAttribute) GetDataSource(ctx context.Context) schemaD.Attr
 		a.CustomType = s.getCustomType(a.NestedObject.Type()).(supertypes.MapNestedType)
 	}
 
-	a.MarkdownDescription = genDataSourceAttrDescription(ctx, a.MarkdownDescription, a.Validators)
+	deprecationMessage := ""
+	if s.Deprecated != nil {
+		a.DeprecationMessage = s.Deprecated.DeprecationMessage
+		deprecationMessage = s.Deprecated.computeDeprecatedDocumentation()
+	}
+
+	a.MarkdownDescription = genDataSourceAttrDescription(ctx, a.MarkdownDescription, deprecationMessage, a.Validators)
 	return a
 }

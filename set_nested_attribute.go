@@ -11,6 +11,7 @@ import (
 var _ Attribute = SetNestedAttribute{}
 
 type SetNestedAttribute struct {
+	Deprecated *Deprecated
 	Common     *schemaR.SetNestedAttribute
 	Resource   *schemaR.SetNestedAttribute
 	DataSource *schemaD.SetNestedAttribute
@@ -68,7 +69,13 @@ func (s SetNestedAttribute) GetResource(ctx context.Context) schemaR.Attribute {
 		}
 	}
 
-	a.MarkdownDescription = genResourceAttrDescription(ctx, a.MarkdownDescription, defaultVDescription, a.Validators, a.PlanModifiers)
+	deprecationMessage := ""
+	if s.Deprecated != nil {
+		a.DeprecationMessage = s.Deprecated.DeprecationMessage
+		deprecationMessage = s.Deprecated.computeDeprecatedDocumentation()
+	}
+
+	a.MarkdownDescription = genResourceAttrDescription(ctx, a.MarkdownDescription, defaultVDescription, deprecationMessage, a.Validators, a.PlanModifiers)
 	return a
 }
 
@@ -103,7 +110,12 @@ func (s SetNestedAttribute) GetDataSource(ctx context.Context) schemaD.Attribute
 	a.Validators = append(a.Validators, common.Validators...)
 	a.Validators = append(a.Validators, dataSource.Validators...)
 
-	a.MarkdownDescription = genDataSourceAttrDescription(ctx, a.MarkdownDescription, a.Validators)
+	deprecationMessage := ""
+	if s.Deprecated != nil {
+		a.DeprecationMessage = s.Deprecated.DeprecationMessage
+		deprecationMessage = s.Deprecated.computeDeprecatedDocumentation()
+	}
 
+	a.MarkdownDescription = genDataSourceAttrDescription(ctx, a.MarkdownDescription, deprecationMessage, a.Validators)
 	return a
 }

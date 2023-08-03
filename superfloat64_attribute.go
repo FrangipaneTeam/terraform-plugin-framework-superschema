@@ -13,6 +13,7 @@ import (
 var _ Attribute = SuperFloat64Attribute{}
 
 type SuperFloat64Attribute struct {
+	Deprecated *Deprecated
 	Common     *schemaR.Float64Attribute
 	Resource   *schemaR.Float64Attribute
 	DataSource *schemaD.Float64Attribute
@@ -87,7 +88,13 @@ func (s SuperFloat64Attribute) GetResource(ctx context.Context) schemaR.Attribut
 		a.CustomType = s.getCustomType().(supertypes.Float64Type)
 	}
 
-	a.MarkdownDescription = genResourceAttrDescription(ctx, a.MarkdownDescription, defaultVDescription, a.Validators, a.PlanModifiers)
+	deprecationMessage := ""
+	if s.Deprecated != nil {
+		a.DeprecationMessage = s.Deprecated.DeprecationMessage
+		deprecationMessage = s.Deprecated.computeDeprecatedDocumentation()
+	}
+
+	a.MarkdownDescription = genResourceAttrDescription(ctx, a.MarkdownDescription, defaultVDescription, deprecationMessage, a.Validators, a.PlanModifiers)
 	return a
 }
 
@@ -135,6 +142,12 @@ func (s SuperFloat64Attribute) GetDataSource(ctx context.Context) schemaD.Attrib
 		a.CustomType = s.getCustomType().(supertypes.Float64Type)
 	}
 
-	a.MarkdownDescription = genDataSourceAttrDescription(ctx, a.MarkdownDescription, a.Validators)
+	deprecationMessage := ""
+	if s.Deprecated != nil {
+		a.DeprecationMessage = s.Deprecated.DeprecationMessage
+		deprecationMessage = s.Deprecated.computeDeprecatedDocumentation()
+	}
+
+	a.MarkdownDescription = genDataSourceAttrDescription(ctx, a.MarkdownDescription, deprecationMessage, a.Validators)
 	return a
 }
