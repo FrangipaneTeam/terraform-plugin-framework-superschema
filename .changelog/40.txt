@@ -1,0 +1,3 @@
+```release-note:feature
+`Deprecated` - Add `deprecated` option in attribute. Now the documentation will be generated for deprecated attributes.
+```
