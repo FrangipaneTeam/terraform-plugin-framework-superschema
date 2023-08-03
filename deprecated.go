@@ -71,15 +71,15 @@ func (d *Deprecated) computeDeprecatedDocumentation() string {
 		if d.TargetAttributeName == "" {
 			return ""
 		}
-		message += fmt.Sprintf("Rename the `%s` attribute to `%s` ", d.FromAttributeName, d.TargetAttributeName)
+		message += fmt.Sprintf("Rename the `%s` attribute to `%s`", d.FromAttributeName, d.TargetAttributeName)
 	case d.Removed:
-		message += fmt.Sprintf("Remove the `%s` attribute configuration ", d.FromAttributeName)
+		message += fmt.Sprintf("Remove the `%s` attribute configuration", d.FromAttributeName)
 
 		if d.TargetResourceName != "" {
 			if d.LinkToResourceDoc != "" {
-				message += fmt.Sprintf("as it replaced by the resource [`%s`](%s) ", d.TargetResourceName, d.LinkToResourceDoc)
+				message += fmt.Sprintf("as it replaced by the resource [`%s`](%s)", d.TargetResourceName, d.LinkToResourceDoc)
 			} else {
-				message += fmt.Sprintf("as it replaced by the resource `%s` ", d.TargetResourceName)
+				message += fmt.Sprintf("as it replaced by the resource `%s`", d.TargetResourceName)
 			}
 		}
 	default:
@@ -87,9 +87,9 @@ func (d *Deprecated) computeDeprecatedDocumentation() string {
 	}
 
 	if d.LinkToMilestone != "" {
-		message += fmt.Sprintf(", it will be be removed in the version [`%s`](%s) of the provider", d.TargetRelease, d.LinkToMilestone)
+		message += fmt.Sprintf(", it will be removed in the version [`%s`](%s) of the provider", d.TargetRelease, d.LinkToMilestone)
 	} else {
-		message += fmt.Sprintf(", it will be be removed in the version `%s` of the provider", d.TargetRelease)
+		message += fmt.Sprintf(", it will be removed in the version `%s` of the provider", d.TargetRelease)
 	}
 
 	if d.LinkToIssue != "" {
