@@ -1,5 +1,9 @@
 ## 1.5.0 (Unreleased)
 
+### :rocket: **New Features**
+
+* `Deprecated` - Add `deprecated` option in attribute. Now the documentation will be generated for deprecated attributes. ([GH-40](https://github.com/orange-cloudavenue/terraform-provider-cloudavenue/issues/40))
+
 ### :dependabot: **Dependencies**
 
 * deps: bumps github.com/hashicorp/terraform-plugin-framework from 1.3.2 to 1.3.3 ([GH-39](https://github.com/orange-cloudavenue/terraform-provider-cloudavenue/issues/39))
