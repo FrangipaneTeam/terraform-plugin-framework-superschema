@@ -13,6 +13,7 @@ import (
 var _ Attribute = SuperStringAttribute{}
 
 type SuperStringAttribute struct {
+	Deprecated *Deprecated
 	Common     *schemaR.StringAttribute
 	Resource   *schemaR.StringAttribute
 	DataSource *schemaD.StringAttribute
@@ -87,7 +88,13 @@ func (s SuperStringAttribute) GetResource(ctx context.Context) schemaR.Attribute
 		a.CustomType = s.getCustomType().(supertypes.StringType)
 	}
 
-	a.MarkdownDescription = genResourceAttrDescription(ctx, a.MarkdownDescription, defaultVDescription, a.Validators, a.PlanModifiers)
+	deprecationMessage := ""
+	if s.Deprecated != nil {
+		a.DeprecationMessage = s.Deprecated.DeprecationMessage
+		deprecationMessage = s.Deprecated.computeDeprecatedDocumentation()
+	}
+
+	a.MarkdownDescription = genResourceAttrDescription(ctx, a.MarkdownDescription, defaultVDescription, deprecationMessage, a.Validators, a.PlanModifiers)
 	return a
 }
 
@@ -135,6 +142,12 @@ func (s SuperStringAttribute) GetDataSource(ctx context.Context) schemaD.Attribu
 		a.CustomType = s.getCustomType().(supertypes.StringType)
 	}
 
-	a.MarkdownDescription = genDataSourceAttrDescription(ctx, a.MarkdownDescription, a.Validators)
+	deprecationMessage := ""
+	if s.Deprecated != nil {
+		a.DeprecationMessage = s.Deprecated.DeprecationMessage
+		deprecationMessage = s.Deprecated.computeDeprecatedDocumentation()
+	}
+
+	a.MarkdownDescription = genDataSourceAttrDescription(ctx, a.MarkdownDescription, deprecationMessage, a.Validators)
 	return a
 }

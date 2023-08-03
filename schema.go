@@ -23,12 +23,14 @@ var (
 const (
 	useStateForUnknown    = "useStateForUnknownModifier"
 	requireReplace        = "requiresReplaceIfModifier"
-	forceNewDesc          = "(ForceNew)"
 	validatorOneOf        = "oneOfValidator"
 	validatorExactlyOneOf = "ExactlyOneOfValidator"
+
+	forceNewDesc = "(ForceNew)"
 )
 
 type Schema struct {
+	Deprecated Deprecated
 	Common     SchemaDetails
 	Resource   SchemaDetails
 	DataSource SchemaDetails
@@ -49,6 +51,10 @@ func (s Schema) GetResource(ctx context.Context) schemaR.Schema {
 		s.Common.DeprecationMessage = addToDescription(s.Common.MarkdownDescription, s.Resource.DeprecationMessage)
 	}
 
+	if s.Deprecated.DeprecationMessage != "" {
+		s.Common.DeprecationMessage = addToDescription(s.Common.MarkdownDescription, s.Deprecated.DeprecationMessage)
+	}
+
 	return schemaR.Schema{
 		MarkdownDescription: s.Common.MarkdownDescription,
 		DeprecationMessage:  s.Common.DeprecationMessage,
@@ -63,6 +69,10 @@ func (s Schema) GetDataSource(ctx context.Context) schemaD.Schema {
 
 	if s.DataSource.DeprecationMessage != "" {
 		s.Common.DeprecationMessage = addToDescription(s.Common.MarkdownDescription, s.DataSource.DeprecationMessage)
+	}
+
+	if s.Deprecated.DeprecationMessage != "" {
+		s.Common.DeprecationMessage = addToDescription(s.Common.MarkdownDescription, s.Deprecated.DeprecationMessage)
 	}
 
 	return schemaD.Schema{
@@ -198,7 +208,7 @@ func updatePlanModifierDescription[D planmodifier.Describer](ctx context.Context
 	return description
 }
 
-func genResourceAttrDescription[V validator.Describer, P planmodifier.Describer](ctx context.Context, description, defaultVDescription string, validators []V, planmodifiers []P) string {
+func genResourceAttrDescription[V validator.Describer, P planmodifier.Describer](ctx context.Context, description, defaultVDescription, deprecatedDescription string, validators []V, planmodifiers []P) string {
 	pmDescription := updatePlanModifierDescription(ctx, description, planmodifiers)
 	validatorDescription := updateValidatorsDescription(ctx, validators)
 
@@ -209,14 +219,21 @@ func genResourceAttrDescription[V validator.Describer, P planmodifier.Describer]
 	if defaultVDescription != "" {
 		description = addToDescriptionWithDot(description, defaultVDescription)
 	}
+	if deprecatedDescription != "" {
+		description = addToDescriptionWithDot(description, deprecatedDescription)
+	}
+
 	description = addEndDot(description)
 	return description
 }
 
-func genDataSourceAttrDescription[V validator.Describer](ctx context.Context, description string, validators []V) string {
+func genDataSourceAttrDescription[V validator.Describer](ctx context.Context, description, deprecatedDescription string, validators []V) string {
 	validatorDescription := updateValidatorsDescription(ctx, validators)
 	if validatorDescription != "" {
 		description = addToDescriptionWithDot(description, validatorDescription)
+	}
+	if deprecatedDescription != "" {
+		description = addToDescriptionWithDot(description, deprecatedDescription)
 	}
 	description = addEndDot(description)
 	return description

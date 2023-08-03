@@ -4,3 +4,4 @@ This is a try to solve these issues :
 
 * Don't repeat yourself : common fields applied on resources and datasources.
 * Auto format attributes markdown description with validators and plan modifiers descriptions, default values...
+* Auto generate deprecated documentation for deprecated attributes.
