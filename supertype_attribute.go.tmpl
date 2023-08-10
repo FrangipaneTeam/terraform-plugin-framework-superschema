@@ -280,7 +280,7 @@ func (s Super{{ .TypeName }}Attribute) GetDataSource(ctx context.Context) schema
     {{- end }}
 	}
 
-	{{- if or (eq .TypeName "List") (eq .TypeName "Set") (eq .TypeName "Map") }}
+	{{ if or (eq .TypeName "List") (eq .TypeName "Set") (eq .TypeName "Map") }}
 	if s.DataSource != nil {
 		if s.DataSource.ElementType != nil {
 			a.ElementType = s.DataSource.ElementType
@@ -317,13 +317,6 @@ func (s Super{{ .TypeName }}Attribute) GetDataSource(ctx context.Context) schema
 	}
 	{{- end }}
 
-{{- if or (eq .TypeName "ListNested") (eq .TypeName "SetNested") (eq .TypeName "MapNested") }}
-	// * If user has not provided a custom type, we will use the default supertypes
-	if a.CustomType == nil {
-		a.CustomType = s.getCustomType(a.NestedObject.Type()).(supertypes.{{ .TypeName }}Type)
-	}
-    {{- end }}
-
 	{{- if or (eq .TypeName "SingleNested") }}
 	// * If user has not provided a custom type, we will use the default supertypes
 	if a.CustomType == nil {
@@ -334,16 +327,8 @@ func (s Super{{ .TypeName }}Attribute) GetDataSource(ctx context.Context) schema
 		}
 
 		a.CustomType = s.getCustomType(attrTypes).(supertypes.{{ .TypeName }}Type)
-
 	}
     {{- end }}
-
-    {{- if or (eq .TypeName "List") (eq .TypeName "Set") (eq .TypeName "Map") }}
-	// * If user has not provided a custom type, we will use the default supertypes
-	if a.CustomType == nil {
-		a.CustomType = s.getCustomType(a.ElementType).(supertypes.{{ .TypeName }}Type)
-	}
-	{{- end }}
 
     {{- if or (eq .TypeName "String") (eq .TypeName "Bool") (eq .TypeName "Int64") (eq .TypeName "Float64") (eq .TypeName "Number") }}
 	// * If user has not provided a custom type, we will use the default supertypes
