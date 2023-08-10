@@ -160,7 +160,6 @@ func (s SuperSingleNestedAttribute) GetDataSource(ctx context.Context) schemaD.A
 		}
 
 		a.CustomType = s.getCustomType(attrTypes).(supertypes.SingleNestedType)
-
 	}
 
 	deprecationMessage := ""

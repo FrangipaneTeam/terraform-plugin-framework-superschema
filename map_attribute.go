@@ -107,7 +107,6 @@ func (s MapAttribute) GetDataSource(ctx context.Context) schemaD.Attribute {
 		DeprecationMessage:  computeDeprecationMessage(common, dataSource),
 		ElementType:         common.ElementType,
 	}
-
 	if s.DataSource != nil {
 		if s.DataSource.ElementType != nil {
 			a.ElementType = s.DataSource.ElementType
