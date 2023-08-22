@@ -16,14 +16,19 @@ import (
 
 //go:generate go run template.go
 var (
-	reOneOf = regexp.MustCompile(`\\"(\S+)\\"`)
+	reOneOf = regexp.MustCompile(`\"(\S+)\"`)
 	words   = regexp.MustCompile(`(\w+)`)
 )
 
 const (
-	useStateForUnknown    = "useStateForUnknownModifier"
-	requireReplace        = "requiresReplaceIfModifier"
-	validatorOneOf        = "oneOfValidator"
+	useStateForUnknown             = "useStateForUnknownModifier"
+	requireReplace                 = "requiresReplaceIfModifier"
+	validatorOneOf                 = "oneOfValidator"
+	validatorOneOfCaseInsensitive  = "oneOfCaseInsensitiveValidator"
+	validatorNoneOf                = "noneOfValidator"
+	validatorNoneOfCaseInsensitive = "noneOfCaseInsensitiveValidator"
+
+	// ExactlyOneOfValidator have uppercase in the beginning of the name because it is a private type in terraform-plugin-framework.(https://github.com/hashicorp/terraform-plugin-framework-validators/blob/main/stringvalidator/exactly_one_of.go)
 	validatorExactlyOneOf = "ExactlyOneOfValidator"
 
 	forceNewDesc = "(ForceNew)"
@@ -108,6 +113,21 @@ func addOneOfToDescription(oneof, description string) string {
 	return newD
 }
 
+// addNoneOfToDescription reformat NoneOf validator description.
+func addNoneOfToDescription(noneof, description string) string {
+	params := reOneOf.FindAllStringSubmatch(noneof, -1)
+	desc := ""
+	for i, p := range params {
+		desc += fmt.Sprintf("`%s`", p[1])
+		if i < len(params)-1 {
+			desc += ", "
+		}
+	}
+	newD := description
+	newD += "Value must not be one of : " + desc + "."
+	return newD
+}
+
 // addOnlyOneToDescription reformat OneOf validator description.
 func addOnlyOneToDescription(onlyO, description string) string {
 	p := strings.Split(onlyO, ":")
@@ -172,8 +192,10 @@ func updateValidatorsDescription[D validator.Describer](ctx context.Context, val
 		}
 		name := getType(v)
 		switch name {
-		case validatorOneOf:
+		case validatorOneOf, validatorOneOfCaseInsensitive:
 			description = addOneOfToDescription(toAdd, description)
+		case validatorNoneOf, validatorNoneOfCaseInsensitive:
+			description = addNoneOfToDescription(toAdd, description)
 		case validatorExactlyOneOf:
 			description = addOnlyOneToDescription(toAdd, description)
 		default:
