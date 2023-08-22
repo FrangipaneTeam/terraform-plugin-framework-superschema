@@ -96,7 +96,7 @@ func (d *Deprecated) computeDeprecatedDocumentation() string {
 		message += fmt.Sprintf(". See the [GitHub issue](%s) for more information.", d.LinkToIssue)
 	}
 
-	return message
+	return addEndDot(message)
 }
 
 // GetDeprecationMessage returns the deprecation message for the attribute.

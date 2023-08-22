@@ -135,7 +135,6 @@ func (s {{ .TypeName }}Attribute) GetDataSource(ctx context.Context) schemaD.Att
 	}
 
   {{- if or (eq .TypeName "List") (eq .TypeName "Set") (eq .TypeName "Map") }}
-
   if s.DataSource != nil {
     if s.DataSource.ElementType != nil {
       a.ElementType = s.DataSource.ElementType

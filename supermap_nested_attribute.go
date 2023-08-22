@@ -150,10 +150,6 @@ func (s SuperMapNestedAttribute) GetDataSource(ctx context.Context) schemaD.Attr
 	if a.CustomType == nil {
 		a.CustomType = s.getCustomType(a.NestedObject.Type()).(supertypes.MapNestedType)
 	}
-	// * If user has not provided a custom type, we will use the default supertypes
-	if a.CustomType == nil {
-		a.CustomType = s.getCustomType(a.NestedObject.Type()).(supertypes.MapNestedType)
-	}
 
 	deprecationMessage := ""
 	if s.Deprecated != nil {

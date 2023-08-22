@@ -132,6 +132,7 @@ func (s SuperSetAttribute) GetDataSource(ctx context.Context) schemaD.Attribute 
 		DeprecationMessage:  computeDeprecationMessage(common, dataSource),
 		ElementType:         common.ElementType,
 	}
+
 	if s.DataSource != nil {
 		if s.DataSource.ElementType != nil {
 			a.ElementType = s.DataSource.ElementType
@@ -151,10 +152,6 @@ func (s SuperSetAttribute) GetDataSource(ctx context.Context) schemaD.Attribute 
 		if s.DataSource.CustomType != nil {
 			a.CustomType = s.DataSource.CustomType
 		}
-	}
-	// * If user has not provided a custom type, we will use the default supertypes
-	if a.CustomType == nil {
-		a.CustomType = s.getCustomType(a.ElementType).(supertypes.SetType)
 	}
 	// * If user has not provided a custom type, we will use the default supertypes
 	if a.CustomType == nil {
