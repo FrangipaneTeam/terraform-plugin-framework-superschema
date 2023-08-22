@@ -1,0 +1,7 @@
+```release-note:bug
+`validator/OneOf` - Fix description after upgrade dependency `hashicorp/terraform-plugin-framework-validators` to `v0.11.0`.
+```
+
+```release-note:feature
+`validator/NoneOf` - Add support for formatting `NoneOf` validation description.
+```
