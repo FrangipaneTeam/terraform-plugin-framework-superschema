@@ -1,4 +1,9 @@
 ## 1.6.0 (Unreleased)
+
+### :dependabot: **Dependencies**
+
+* deps: bumps github.com/FrangipaneTeam/terraform-plugin-framework-supertypes from v0.0.5 to v0.1.0 ([GH-46](https://github.com/orange-cloudavenue/terraform-provider-cloudavenue/issues/46))
+
 ## 1.5.2 (August 22, 2023)
 
 ### :rocket: **New Features**
