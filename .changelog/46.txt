@@ -1,0 +1,3 @@
+```release-note:dependency
+deps: bumps github.com/FrangipaneTeam/terraform-plugin-framework-supertypes from v0.0.5 to v0.1.0
+```
