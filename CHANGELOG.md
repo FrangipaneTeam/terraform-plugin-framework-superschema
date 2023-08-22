@@ -1,5 +1,13 @@
 ## 1.6.0 (Unreleased)
 
+### :rocket: **New Features**
+
+* `validator/NoneOf` - Add support for formatting `NoneOf` validation description. ([GH-45](https://github.com/orange-cloudavenue/terraform-provider-cloudavenue/issues/45))
+
+### :bug: **Bug Fixes**
+
+* `validator/OneOf` - Fix description after upgrade dependency `hashicorp/terraform-plugin-framework-validators` to `v0.11.0`. ([GH-45](https://github.com/orange-cloudavenue/terraform-provider-cloudavenue/issues/45))
+
 ### :dependabot: **Dependencies**
 
 * deps: bumps github.com/hashicorp/terraform-plugin-framework from 1.3.3 to 1.3.4 ([GH-42](https://github.com/orange-cloudavenue/terraform-provider-cloudavenue/issues/42))
