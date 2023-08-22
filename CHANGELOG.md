@@ -1,4 +1,5 @@
 ## 1.6.0 (Unreleased)
+## 1.5.2 (August 22, 2023)
 
 ### :rocket: **New Features**
 
