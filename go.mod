@@ -4,7 +4,7 @@ go 1.20
 
 require (
 	github.com/FrangipaneTeam/terraform-plugin-framework-supertypes v0.0.5
-	github.com/hashicorp/terraform-plugin-framework v1.3.4
+	github.com/hashicorp/terraform-plugin-framework v1.3.5
 	github.com/hashicorp/terraform-plugin-framework-timeouts v0.4.1
 	github.com/iancoleman/strcase v0.3.0
 )
