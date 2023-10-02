@@ -219,6 +219,11 @@ func updatePlanModifierDescription[D planmodifier.Describer](ctx context.Context
 		case requireReplace:
 			description = addToDescription(forceNewDesc, description)
 
+			// Require replace with custom description
+			if !strings.Contains(toAdd, "Terraform will destroy and recreate the resource") {
+				description = addToDescription(description, toAdd)
+			}
+
 		case useStateForUnknown:
 			continue
 
