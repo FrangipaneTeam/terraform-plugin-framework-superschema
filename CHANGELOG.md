@@ -3,6 +3,7 @@
 ### :dependabot: **Dependencies**
 
 * deps: bumps github.com/hashicorp/terraform-plugin-framework from 1.4.0 to 1.4.1 ([GH-56](https://github.com/orange-cloudavenue/terraform-provider-cloudavenue/issues/56))
+* deps: bumps stefanzweifel/git-auto-commit-action from 4 to 5 ([GH-55](https://github.com/orange-cloudavenue/terraform-provider-cloudavenue/issues/55))
 
 ## 1.5.4 (October  2, 2023)
 
