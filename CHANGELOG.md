@@ -1,7 +1,12 @@
 ## 1.6.0 (Unreleased)
 
+### :rocket: **New Features**
+
+* `Attributs` - Add `SuperListNestedAttributeOf`, `SuperSetNestedAttributeOf`, `SuperMapNestedAttributeOf` and `SuperSingleNestedAttributeOf` to create nested attributes with generic struct. ([GH-59](https://github.com/orange-cloudavenue/terraform-provider-cloudavenue/issues/59))
+
 ### :dependabot: **Dependencies**
 
+* deps: bumps github.com/FrangipaneTeam/terraform-plugin-framework-supertypes from v0.1.0 to v0.2.0 ([GH-59](https://github.com/orange-cloudavenue/terraform-provider-cloudavenue/issues/59))
 * deps: bumps github.com/hashicorp/terraform-plugin-framework from 1.4.1 to 1.4.2 ([GH-58](https://github.com/orange-cloudavenue/terraform-provider-cloudavenue/issues/58))
 
 ## 1.5.5 (October 12, 2023)
