@@ -115,7 +115,6 @@ linters-settings:
     extra-rules: true
   
   revive:
-    revive:
     ignore-generated-header: true
     severity: error
     rules:

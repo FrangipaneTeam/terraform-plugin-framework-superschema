@@ -1,0 +1,7 @@
+```release-note:dependency
+deps: bumps github.com/FrangipaneTeam/terraform-plugin-framework-supertypes from v0.1.0 to v0.2.0
+```
+
+```release-note:feature
+`Attributs` - Add `SuperListNestedAttributeOf`, `SuperSetNestedAttributeOf`, `SuperMapNestedAttributeOf` and `SuperSingleNestedAttributeOf` to create nested attributes with generic struct.
+```

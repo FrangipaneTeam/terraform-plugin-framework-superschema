@@ -346,3 +346,271 @@ func (s Super{{ .TypeName }}Attribute) GetDataSource(ctx context.Context) schema
 	a.MarkdownDescription = genDataSourceAttrDescription(ctx, a.MarkdownDescription, deprecationMessage, a.Validators)
 	return a
 }
+
+{{- if or (eq .TypeName "ListNested") (eq .TypeName "SetNested") (eq .TypeName "MapNested") (eq .TypeName "SingleNested") }}
+
+
+// * SuperTypeOf
+
+
+var _ Attribute = Super{{ .TypeName }}AttributeOf[struct{}]{}
+
+type Super{{ .TypeName }}AttributeOf[T any] struct {
+	Deprecated *Deprecated
+	Common     *schemaR.{{ .TypeName }}Attribute
+	Resource   *schemaR.{{ .TypeName }}Attribute
+	DataSource *schemaD.{{ .TypeName }}Attribute
+  {{- if or (eq .TypeName "ListNested") (eq .TypeName "SetNested") (eq .TypeName "SingleNested") (eq .TypeName "MapNested") }}
+	Attributes Attributes
+  {{- end }}
+}
+
+// IsResource returns true if the attribute is a resource attribute.
+func (s Super{{ .TypeName }}AttributeOf[T]) IsResource() bool {
+	return s.Resource != nil || s.Common != nil
+}
+
+// IsDataSource returns true if the attribute is a data source attribute.
+func (s Super{{ .TypeName }}AttributeOf[T]) IsDataSource() bool {
+	return s.DataSource != nil || s.Common != nil
+}
+
+{{- if or (eq .TypeName "List") }}
+// GetCustomType returns the custom type of the attribute.
+func (s Super{{ .TypeName }}AttributeOf[T]) getCustomType(oB attr.Type) basetypes.ListTypable {
+	return supertypes.{{ .TypeName }}Type{
+		ListType: basetypes.ListType{
+			ElemType: oB,
+		},
+	}
+}
+{{ end }}
+
+{{- if or (eq .TypeName "Set") }}
+// GetCustomType returns the custom type of the attribute.
+func (s Super{{ .TypeName }}AttributeOf[T]) getCustomType(oB attr.Type) basetypes.SetTypable {
+	return supertypes.{{ .TypeName }}Type{
+		SetType: basetypes.SetType{
+			ElemType: oB,
+		},
+	}
+}
+{{ end }}
+
+{{- if or (eq .TypeName "Map") }}
+// GetCustomType returns the custom type of the attribute.
+func (s Super{{ .TypeName }}AttributeOf[T]) getCustomType(oB attr.Type) basetypes.MapTypable {
+	return supertypes.{{ .TypeName }}Type{
+		MapType: basetypes.MapType{
+			ElemType: oB,
+		},
+	}
+}
+{{ end }}
+
+{{- if or (eq .TypeName "ListNested") (eq .TypeName "SetNested") (eq .TypeName "MapNested") (eq .TypeName "SingleNested") }}
+{{ end }}
+
+
+//nolint:dupl
+func (s Super{{ .TypeName }}AttributeOf[T]) GetResource(ctx context.Context) schemaR.Attribute {
+	var (
+		common   schemaR.{{ .TypeName }}Attribute
+		resource schemaR.{{ .TypeName }}Attribute
+	)
+
+	if s.Common != nil {
+		common = *s.Common
+	}
+
+	if s.Resource != nil {
+		resource = *s.Resource
+	}
+
+	a := schemaR.{{ .TypeName }}Attribute{
+		Required:            computeIsRequired(common, resource),
+		Optional:            computeIsOptional(common, resource),
+		Computed:            computeIsComputed(common, resource),
+		Sensitive:           computeIsSensitive(common, resource),
+		MarkdownDescription: computeMarkdownDescription(common, resource),
+		Description:         computeDescription(common, resource),
+		DeprecationMessage:  computeDeprecationMessage(common, resource),
+    {{- if or (eq .TypeName "List") (eq .TypeName "Set") (eq .TypeName "Map") }}
+		ElementType:         common.ElementType,
+    {{- end }}
+    {{- if or (eq .TypeName "ListNested") (eq .TypeName "SetNested") (eq .TypeName "MapNested") }}
+		NestedObject: schemaR.NestedAttributeObject{
+			Attributes: s.Attributes.process(ctx, resourceT).(map[string]schemaR.Attribute),
+		},
+    {{- end }}
+	{{- if (eq .TypeName "SingleNested") }}
+		Attributes: s.Attributes.process(ctx, resourceT).(map[string]schemaR.Attribute),
+    {{- end }}
+	}
+
+  {{- if or (eq .TypeName "List") (eq .TypeName "Set") (eq .TypeName "Map") }}
+  if s.Resource != nil {
+    if s.Resource.ElementType != nil {
+      a.ElementType = s.Resource.ElementType
+    }
+  }
+  {{- end }}
+
+	a.Validators = append(a.Validators, common.Validators...)
+	a.Validators = append(a.Validators, resource.Validators...)
+	a.PlanModifiers = append(a.PlanModifiers, common.PlanModifiers...)
+	a.PlanModifiers = append(a.PlanModifiers, resource.PlanModifiers...)
+
+	defaultVDescription := ""
+
+	if s.Common != nil {
+		if s.Common.CustomType != nil {
+			a.CustomType = s.Common.CustomType
+		}
+	}
+
+	if s.Resource != nil {
+		if s.Resource.Default != nil {
+			a.Default = s.Resource.Default
+			defaultVDescription = s.Resource.Default.MarkdownDescription(ctx)
+		}
+		if s.Resource.CustomType != nil {
+			a.CustomType = s.Resource.CustomType
+		}
+	}
+
+	{{- if or (eq .TypeName "ListNested") (eq .TypeName "SetNested") (eq .TypeName "MapNested") }}
+	// * If user has not provided a custom type, we will use the default supertypes
+	if a.CustomType == nil {
+		a.CustomType = supertypes.New{{ .TypeName }}ObjectTypeOf[T](ctx)
+	}
+    {{- end }}
+
+	{{- if or (eq .TypeName "SingleNested") }}
+	// * If user has not provided a custom type, we will use the default supertypes
+	if a.CustomType == nil {
+		a.CustomType = supertypes.NewSingleNestedObjectTypeOf[T](ctx).ObjectType
+	}
+    {{- end }}
+
+    {{- if or (eq .TypeName "List") (eq .TypeName "Set") (eq .TypeName "Map") }}
+	// * If user has not provided a custom type, we will use the default supertypes
+	if a.CustomType == nil {
+		a.CustomType = s.getCustomType(a.ElementType).(supertypes.{{ .TypeName }}Type)
+	}
+	{{- end }}
+
+    {{- if or (eq .TypeName "String") (eq .TypeName "Bool") (eq .TypeName "Int64") (eq .TypeName "Float64") (eq .TypeName "Number") }}
+	// * If user has not provided a custom type, we will use the default supertypes
+	if a.CustomType == nil {
+		a.CustomType = s.getCustomType().(supertypes.{{ .TypeName }}Type)
+	}
+	{{- end }}
+
+	deprecationMessage := ""
+	if s.Deprecated != nil {
+		a.DeprecationMessage = s.Deprecated.DeprecationMessage
+		deprecationMessage = s.Deprecated.computeDeprecatedDocumentation()
+	}
+
+	a.MarkdownDescription = genResourceAttrDescription(ctx, a.MarkdownDescription, defaultVDescription, deprecationMessage, a.Validators, a.PlanModifiers)
+	return a
+}
+
+//nolint:dupl
+func (s Super{{ .TypeName }}AttributeOf[T]) GetDataSource(ctx context.Context) schemaD.Attribute {
+	var (
+		common     schemaR.{{ .TypeName }}Attribute
+		dataSource schemaD.{{ .TypeName }}Attribute
+	)
+
+	if s.Common != nil {
+		common = *s.Common
+	}
+
+	if s.DataSource != nil {
+		dataSource = *s.DataSource
+	}
+
+	a := schemaD.{{ .TypeName }}Attribute{
+		Required:            computeIsRequired(common, dataSource),
+		Optional:            computeIsOptional(common, dataSource),
+		Computed:            computeIsComputed(common, dataSource),
+		Sensitive:           computeIsSensitive(common, dataSource),
+		MarkdownDescription: computeMarkdownDescription(common, dataSource),
+		Description:         computeDescription(common, dataSource),
+		DeprecationMessage:  computeDeprecationMessage(common, dataSource),
+    {{- if or (eq .TypeName "List") (eq .TypeName "Set") (eq .TypeName "Map") }}
+		ElementType:         common.ElementType,
+    {{- end }}
+    {{- if or (eq .TypeName "ListNested") (eq .TypeName "SetNested") (eq .TypeName "MapNested") }}
+		NestedObject: schemaD.NestedAttributeObject{
+			Attributes: s.Attributes.process(ctx, dataSourceT).(map[string]schemaD.Attribute),
+		},
+    {{- end }}
+	{{- if (eq .TypeName "SingleNested") }}
+		Attributes: s.Attributes.process(ctx, dataSourceT).(map[string]schemaD.Attribute),
+    {{- end }}
+	}
+
+	{{ if or (eq .TypeName "List") (eq .TypeName "Set") (eq .TypeName "Map") }}
+	if s.DataSource != nil {
+		if s.DataSource.ElementType != nil {
+			a.ElementType = s.DataSource.ElementType
+		}
+	}
+	{{- end }}
+
+	a.Validators = append(a.Validators, common.Validators...)
+	a.Validators = append(a.Validators, dataSource.Validators...)
+
+	if s.Common != nil {
+		if s.Common.CustomType != nil {
+			a.CustomType = s.Common.CustomType
+		}
+	}
+
+	if s.DataSource != nil {
+		if s.DataSource.CustomType != nil {
+			a.CustomType = s.DataSource.CustomType
+		}
+	}
+
+	{{- if or (eq .TypeName "ListNested") (eq .TypeName "SetNested") (eq .TypeName "MapNested") }}
+	// * If user has not provided a custom type, we will use the default supertypes
+	if a.CustomType == nil {
+		a.CustomType = supertypes.New{{ .TypeName }}ObjectTypeOf[T](ctx)
+	}
+    {{- end }}
+
+    {{- if or (eq .TypeName "List") (eq .TypeName "Set") (eq .TypeName "Map") }}
+	// * If user has not provided a custom type, we will use the default supertypes
+	if a.CustomType == nil {
+		a.CustomType = supertypes.{{ .TypeName }}ObjectTypeOf[T]{}
+	}
+	{{- end }}
+
+	{{- if or (eq .TypeName "SingleNested") }}
+	// * If user has not provided a custom type, we will use the default supertypes
+	if a.CustomType == nil {
+		a.CustomType = supertypes.NewSingleNestedObjectTypeOf[T](ctx).ObjectType
+	}
+    {{- end }}
+
+    {{- if or (eq .TypeName "String") (eq .TypeName "Bool") (eq .TypeName "Int64") (eq .TypeName "Float64") (eq .TypeName "Number") }}
+	// * If user has not provided a custom type, we will use the default supertypes
+	if a.CustomType == nil {
+		a.CustomType = s.getCustomType().(supertypes.{{ .TypeName }}ObjectTypeOf)
+	}
+	{{- end }}
+
+	deprecationMessage := ""
+	if s.Deprecated != nil {
+		a.DeprecationMessage = s.Deprecated.DeprecationMessage
+		deprecationMessage = s.Deprecated.computeDeprecatedDocumentation()
+	}
+
+	a.MarkdownDescription = genDataSourceAttrDescription(ctx, a.MarkdownDescription, deprecationMessage, a.Validators)
+	return a
+}
+{{ end }}
