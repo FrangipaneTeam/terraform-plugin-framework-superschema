@@ -10,6 +10,7 @@ import (
 	"go/format"
 	"html/template"
 	"os"
+	"strings"
 
 	"github.com/iancoleman/strcase"
 )
@@ -24,6 +25,12 @@ var templateTypeAttribute string
 //go:embed supertype_attribute.go.tmpl
 var templateSuperTypeAttribute string
 
+var templateFuncs = template.FuncMap{
+	"trimSuffix": func(s, suffix string) string {
+		return strings.TrimSuffix(s, suffix)
+	},
+}
+
 func main() {
 	fmt.Println("generating types files...")
 	tA := []string{"string", "bool", "float64", "int64", "list", "list_nested", "object", "single_nested", "set", "set_nested", "number", "map", "map_nested"}
@@ -33,13 +40,13 @@ func main() {
 			TypeName: strcase.ToCamel(t),
 		}
 
-		tmplType, err := template.New("template").Parse(templateTypeAttribute)
+		tmplType, err := template.New("template").Funcs(templateFuncs).Parse(templateTypeAttribute)
 		if err != nil {
 			fmt.Printf("error from template parse : %v\n", err)
 			os.Exit(1)
 		}
 
-		tmplSuperType, err := template.New("template").Parse(templateSuperTypeAttribute)
+		tmplSuperType, err := template.New("template").Funcs(templateFuncs).Parse(templateSuperTypeAttribute)
 		if err != nil {
 			fmt.Printf("error from template parse : %v\n", err)
 			os.Exit(1)
