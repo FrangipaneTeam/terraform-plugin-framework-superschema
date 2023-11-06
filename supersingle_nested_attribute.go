@@ -244,7 +244,7 @@ func (s SuperSingleNestedAttributeOf[T]) GetResource(ctx context.Context) schema
 	}
 	// * If user has not provided a custom type, we will use the default supertypes
 	if a.CustomType == nil {
-		a.CustomType = supertypes.NewSingleNestedObjectTypeOf[T](ctx).ObjectType
+		a.CustomType = supertypes.NewSingleNestedObjectTypeOf[T](ctx)
 	}
 
 	deprecationMessage := ""
@@ -299,7 +299,7 @@ func (s SuperSingleNestedAttributeOf[T]) GetDataSource(ctx context.Context) sche
 	}
 	// * If user has not provided a custom type, we will use the default supertypes
 	if a.CustomType == nil {
-		a.CustomType = supertypes.NewSingleNestedObjectTypeOf[T](ctx).ObjectType
+		a.CustomType = supertypes.NewSingleNestedObjectTypeOf[T](ctx)
 	}
 
 	deprecationMessage := ""
