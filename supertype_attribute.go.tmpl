@@ -489,7 +489,7 @@ func (s Super{{ .TypeName }}AttributeOf[T]) GetResource(ctx context.Context) sch
 	{{- if or (eq .TypeName "SingleNested") }}
 	// * If user has not provided a custom type, we will use the default supertypes
 	if a.CustomType == nil {
-		a.CustomType = supertypes.NewSingleNestedObjectTypeOf[T](ctx).ObjectType
+		a.CustomType = supertypes.NewSingleNestedObjectTypeOf[T](ctx)
 	}
     {{- end }}
 
@@ -593,7 +593,7 @@ func (s Super{{ .TypeName }}AttributeOf[T]) GetDataSource(ctx context.Context) s
 	{{- if or (eq .TypeName "SingleNested") }}
 	// * If user has not provided a custom type, we will use the default supertypes
 	if a.CustomType == nil {
-		a.CustomType = supertypes.NewSingleNestedObjectTypeOf[T](ctx).ObjectType
+		a.CustomType = supertypes.NewSingleNestedObjectTypeOf[T](ctx)
 	}
     {{- end }}
 
