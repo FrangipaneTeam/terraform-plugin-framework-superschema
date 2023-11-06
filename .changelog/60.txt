@@ -1,0 +1,3 @@
+```release-note:bug
+`SingleNestedAttributeOf` - Fix custom type for Single Nested Attribute of
+```
