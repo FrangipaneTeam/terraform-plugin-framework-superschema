@@ -1,4 +1,9 @@
 ## 1.7.0 (Unreleased)
+
+### :bug: **Bug Fixes**
+
+* `SingleNestedAttributeOf` - Fix custom type for Single Nested Attribute of ([GH-60](https://github.com/orange-cloudavenue/terraform-provider-cloudavenue/issues/60))
+
 ## 1.6.0 (October 31, 2023)
 
 ### :rocket: **New Features**
