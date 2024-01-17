@@ -6,6 +6,7 @@
 
 ### :dependabot: **Dependencies**
 
+* deps: bumps actions/setup-go from 4 to 5 (GH-62)
 * deps: bumps actions/upload-artifact from 3 to 4 (GH-64)
 * deps: bumps github.com/FrangipaneTeam/terraform-plugin-framework-supertypes from v0.2.0 to v0.3.0 (GH-66)
 * deps: bumps github.com/hashicorp/terraform-plugin-framework from 1.4.2 to 1.5.0 (GH-65)
