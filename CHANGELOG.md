@@ -1,4 +1,5 @@
-## 1.7.0 (Unreleased)
+## 1.8.0 (Unreleased)
+## 1.7.0 (January 17, 2024)
 
 ### :rocket: **New Features**
 
