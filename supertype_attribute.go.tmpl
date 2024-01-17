@@ -93,8 +93,6 @@ func (s SuperSingleNestedAttribute) getCustomType(aT map[string]attr.Type) baset
 }
 {{ end }}
 
-
-
 {{- if or (eq .TypeName "List") }}
 // GetCustomType returns the custom type of the attribute.
 func (s Super{{ .TypeName }}Attribute) getCustomType(oB attr.Type) basetypes.ListTypable {
@@ -347,11 +345,9 @@ func (s Super{{ .TypeName }}Attribute) GetDataSource(ctx context.Context) schema
 	return a
 }
 
-{{- if or (eq .TypeName "ListNested") (eq .TypeName "SetNested") (eq .TypeName "MapNested") (eq .TypeName "SingleNested") }}
-
+{{- if or (eq .TypeName "ListNested") (eq .TypeName "SetNested") (eq .TypeName "MapNested") (eq .TypeName "SingleNested") (eq .TypeName "Set") (eq .TypeName "List") (eq .TypeName "Map") }}
 
 // * SuperTypeOf
-
 
 var _ Attribute = Super{{ .TypeName }}AttributeOf[struct{}]{}
 
@@ -374,43 +370,6 @@ func (s Super{{ .TypeName }}AttributeOf[T]) IsResource() bool {
 func (s Super{{ .TypeName }}AttributeOf[T]) IsDataSource() bool {
 	return s.DataSource != nil || s.Common != nil
 }
-
-{{- if or (eq .TypeName "List") }}
-// GetCustomType returns the custom type of the attribute.
-func (s Super{{ .TypeName }}AttributeOf[T]) getCustomType(oB attr.Type) basetypes.ListTypable {
-	return supertypes.{{ .TypeName }}Type{
-		ListType: basetypes.ListType{
-			ElemType: oB,
-		},
-	}
-}
-{{ end }}
-
-{{- if or (eq .TypeName "Set") }}
-// GetCustomType returns the custom type of the attribute.
-func (s Super{{ .TypeName }}AttributeOf[T]) getCustomType(oB attr.Type) basetypes.SetTypable {
-	return supertypes.{{ .TypeName }}Type{
-		SetType: basetypes.SetType{
-			ElemType: oB,
-		},
-	}
-}
-{{ end }}
-
-{{- if or (eq .TypeName "Map") }}
-// GetCustomType returns the custom type of the attribute.
-func (s Super{{ .TypeName }}AttributeOf[T]) getCustomType(oB attr.Type) basetypes.MapTypable {
-	return supertypes.{{ .TypeName }}Type{
-		MapType: basetypes.MapType{
-			ElemType: oB,
-		},
-	}
-}
-{{ end }}
-
-{{- if or (eq .TypeName "ListNested") (eq .TypeName "SetNested") (eq .TypeName "MapNested") (eq .TypeName "SingleNested") }}
-{{ end }}
-
 
 //nolint:dupl
 func (s Super{{ .TypeName }}AttributeOf[T]) GetResource(ctx context.Context) schemaR.Attribute {
@@ -448,14 +407,6 @@ func (s Super{{ .TypeName }}AttributeOf[T]) GetResource(ctx context.Context) sch
     {{- end }}
 	}
 
-  {{- if or (eq .TypeName "List") (eq .TypeName "Set") (eq .TypeName "Map") }}
-  if s.Resource != nil {
-    if s.Resource.ElementType != nil {
-      a.ElementType = s.Resource.ElementType
-    }
-  }
-  {{- end }}
-
 	a.Validators = append(a.Validators, common.Validators...)
 	a.Validators = append(a.Validators, resource.Validators...)
 	a.PlanModifiers = append(a.PlanModifiers, common.PlanModifiers...)
@@ -486,26 +437,19 @@ func (s Super{{ .TypeName }}AttributeOf[T]) GetResource(ctx context.Context) sch
 	}
     {{- end }}
 
+	{{- if or (eq .TypeName "Set") (eq .TypeName "List") (eq .TypeName "Map") }}
+	// * If user has not provided a custom type, we will use the default supertypes
+	if a.CustomType == nil {
+		a.CustomType = supertypes.New{{ .TypeName }}TypeOf[T](ctx)
+	}
+	{{- end }}
+
 	{{- if or (eq .TypeName "SingleNested") }}
 	// * If user has not provided a custom type, we will use the default supertypes
 	if a.CustomType == nil {
 		a.CustomType = supertypes.NewSingleNestedObjectTypeOf[T](ctx)
 	}
     {{- end }}
-
-    {{- if or (eq .TypeName "List") (eq .TypeName "Set") (eq .TypeName "Map") }}
-	// * If user has not provided a custom type, we will use the default supertypes
-	if a.CustomType == nil {
-		a.CustomType = s.getCustomType(a.ElementType).(supertypes.{{ .TypeName }}Type)
-	}
-	{{- end }}
-
-    {{- if or (eq .TypeName "String") (eq .TypeName "Bool") (eq .TypeName "Int64") (eq .TypeName "Float64") (eq .TypeName "Number") }}
-	// * If user has not provided a custom type, we will use the default supertypes
-	if a.CustomType == nil {
-		a.CustomType = s.getCustomType().(supertypes.{{ .TypeName }}Type)
-	}
-	{{- end }}
 
 	deprecationMessage := ""
 	if s.Deprecated != nil {
@@ -583,10 +527,10 @@ func (s Super{{ .TypeName }}AttributeOf[T]) GetDataSource(ctx context.Context) s
 	}
     {{- end }}
 
-    {{- if or (eq .TypeName "List") (eq .TypeName "Set") (eq .TypeName "Map") }}
+	{{- if or (eq .TypeName "Set") (eq .TypeName "List") (eq .TypeName "Map") }}
 	// * If user has not provided a custom type, we will use the default supertypes
 	if a.CustomType == nil {
-		a.CustomType = supertypes.{{ .TypeName }}ObjectTypeOf[T]{}
+		a.CustomType = supertypes.New{{ .TypeName }}TypeOf[T](ctx)
 	}
 	{{- end }}
 
@@ -596,13 +540,6 @@ func (s Super{{ .TypeName }}AttributeOf[T]) GetDataSource(ctx context.Context) s
 		a.CustomType = supertypes.NewSingleNestedObjectTypeOf[T](ctx)
 	}
     {{- end }}
-
-    {{- if or (eq .TypeName "String") (eq .TypeName "Bool") (eq .TypeName "Int64") (eq .TypeName "Float64") (eq .TypeName "Number") }}
-	// * If user has not provided a custom type, we will use the default supertypes
-	if a.CustomType == nil {
-		a.CustomType = s.getCustomType().(supertypes.{{ .TypeName }}ObjectTypeOf)
-	}
-	{{- end }}
 
 	deprecationMessage := ""
 	if s.Deprecated != nil {

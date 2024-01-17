@@ -1,0 +1,11 @@
+```release-note:feature
+`AttributeOf` - Add new attributes Set/List/MapAttributeOf[T] to dynamically get/set attributes of a given type.
+```
+
+```release-note:dependency
+deps: bumps github.com/FrangipaneTeam/terraform-plugin-framework-supertypes from v0.2.0 to v0.3.0
+```
+
+```release-note:dependency
+deps: bumps github.com/hashicorp/terraform-plugin-framework from v1.4.2 to v1.5.0
+```
