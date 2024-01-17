@@ -13,7 +13,7 @@ jobs:
           fetch-depth: 0
           submodules: true
           token: ${{ secrets.CHANGELOG_PAT }}
-      - uses: actions/setup-go@v4.0.1
+      - uses: actions/setup-go@v5
         with:
           go-version-file: '.ci/tools/go.mod'
       - run: go generate -tags tools .ci/tools/tools.go
