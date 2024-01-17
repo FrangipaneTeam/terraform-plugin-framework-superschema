@@ -1,4 +1,9 @@
 ## 1.7.0 (Unreleased)
+
+### :dependabot: **Dependencies**
+
+* deps: bumps github.com/hashicorp/terraform-plugin-framework from 1.4.2 to 1.5.0 (GH-65)
+
 ## 1.6.1 (November  6, 2023)
 
 ### :bug: **Bug Fixes**
