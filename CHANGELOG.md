@@ -1,9 +1,15 @@
 ## 1.7.0 (Unreleased)
 
+### :rocket: **New Features**
+
+* `AttributeOf` - Add new attributes Set/List/MapAttributeOf[T] to dynamically get/set attributes of a given type. (GH-66)
+
 ### :dependabot: **Dependencies**
 
 * deps: bumps actions/upload-artifact from 3 to 4 (GH-64)
+* deps: bumps github.com/FrangipaneTeam/terraform-plugin-framework-supertypes from v0.2.0 to v0.3.0 (GH-66)
 * deps: bumps github.com/hashicorp/terraform-plugin-framework from 1.4.2 to 1.5.0 (GH-65)
+* deps: bumps github.com/hashicorp/terraform-plugin-framework from v1.4.2 to v1.5.0 (GH-66)
 
 ## 1.6.1 (November  6, 2023)
 
