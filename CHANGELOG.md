@@ -1,4 +1,11 @@
 ## 1.8.0 (Unreleased)
+
+### :dependabot: **Dependencies**
+
+* deps: bumps dependabot/fetch-metadata from 1.6.0 to 2.2.0 (GH-74)
+* deps: bumps github.com/FrangipaneTeam/terraform-plugin-framework-supertypes from 0.3.0 to 0.4.0 (GH-75)
+* deps: bumps ncipollo/release-action from 1.13.0 to 1.14.0 (GH-70)
+
 ## 1.7.0 (January 17, 2024)
 
 ### :rocket: **New Features**
