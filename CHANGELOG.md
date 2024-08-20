@@ -1,4 +1,7 @@
 ## 1.8.0 (Unreleased)
+### :rotating_light: **Breaking Changes**
+
+* `golang` - Upgrade to Golang 1.21. (GH-77)
 
 ### :dependabot: **Dependencies**
 
