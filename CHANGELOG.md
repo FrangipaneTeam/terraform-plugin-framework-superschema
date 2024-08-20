@@ -1,4 +1,5 @@
-## 1.8.0 (Unreleased)
+## 1.9.0 (Unreleased)
+## 1.8.0 (August 20, 2024)
 ### :rotating_light: **Breaking Changes**
 
 * `golang` - Upgrade to Golang 1.21. (GH-77)
