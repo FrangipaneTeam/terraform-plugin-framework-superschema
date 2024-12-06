@@ -35,7 +35,6 @@ const (
 )
 
 type Schema struct {
-	Deprecated Deprecated
 	Common     SchemaDetails
 	Resource   SchemaDetails
 	DataSource SchemaDetails
@@ -44,25 +43,34 @@ type Schema struct {
 
 type SchemaDetails struct {
 	MarkdownDescription string
-	DeprecationMessage  string
+	Deprecated          DeprecatedResource
+
+	// Deprecated: Use Deprecated instead.
+	DeprecationMessage string
 }
 
 func (s Schema) GetResource(ctx context.Context) schemaR.Schema {
+
 	if s.Resource.MarkdownDescription != "" {
 		s.Common.MarkdownDescription = addToDescription(s.Common.MarkdownDescription, s.Resource.MarkdownDescription)
 	}
 
+	// * Deprecated is a struct that contains the deprecation message and the target resource name.
 	if s.Resource.DeprecationMessage != "" {
-		s.Common.DeprecationMessage = addToDescription(s.Common.MarkdownDescription, s.Resource.DeprecationMessage)
+		s.Common.DeprecationMessage = s.Resource.DeprecationMessage
 	}
 
-	if s.Deprecated.DeprecationMessage != "" {
-		s.Common.DeprecationMessage = addToDescription(s.Common.MarkdownDescription, s.Deprecated.DeprecationMessage)
+	if s.Resource.Deprecated != (DeprecatedResource{}) {
+		s.Common.Deprecated = s.Resource.Deprecated
+	}
+
+	if s.Common.Deprecated != (DeprecatedResource{}) {
+		s.Common.MarkdownDescription = addToDescription(s.Common.MarkdownDescription, s.Common.Deprecated.GetMarkdownDeprecationMessage(true))
 	}
 
 	return schemaR.Schema{
 		MarkdownDescription: s.Common.MarkdownDescription,
-		DeprecationMessage:  s.Common.DeprecationMessage,
+		DeprecationMessage:  s.Common.Deprecated.GetDeprecationMessage(),
 		Attributes:          s.Attributes.process(ctx, resourceT).(map[string]schemaR.Attribute),
 	}
 }
@@ -72,17 +80,22 @@ func (s Schema) GetDataSource(ctx context.Context) schemaD.Schema {
 		s.Common.MarkdownDescription = addToDescription(s.Common.MarkdownDescription, s.DataSource.MarkdownDescription)
 	}
 
+	// * Deprecated is a struct that contains the deprecation message and the target resource name.
 	if s.DataSource.DeprecationMessage != "" {
-		s.Common.DeprecationMessage = addToDescription(s.Common.MarkdownDescription, s.DataSource.DeprecationMessage)
+		s.Common.DeprecationMessage = s.DataSource.DeprecationMessage
 	}
 
-	if s.Deprecated.DeprecationMessage != "" {
-		s.Common.DeprecationMessage = addToDescription(s.Common.MarkdownDescription, s.Deprecated.DeprecationMessage)
+	if s.DataSource.Deprecated != (DeprecatedResource{}) {
+		s.Common.Deprecated = s.DataSource.Deprecated
+	}
+
+	if s.Common.Deprecated != (DeprecatedResource{}) {
+		s.Common.MarkdownDescription = addToDescription(s.Common.MarkdownDescription, s.Common.Deprecated.GetMarkdownDeprecationMessage(true))
 	}
 
 	return schemaD.Schema{
 		MarkdownDescription: s.Common.MarkdownDescription,
-		DeprecationMessage:  s.Common.DeprecationMessage,
+		DeprecationMessage:  s.Common.Deprecated.GetDeprecationMessage(),
 		Attributes:          s.Attributes.process(ctx, dataSourceT).(map[string]schemaD.Attribute),
 	}
 }
