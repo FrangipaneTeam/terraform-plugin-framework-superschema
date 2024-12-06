@@ -1,4 +1,9 @@
 ## 1.9.0 (Unreleased)
+
+### :rocket: **New Features**
+
+* `Deprecated` - Added a new DeprecatedResource Struct in base schema. (GH-80)
+
 ## 1.8.0 (August 20, 2024)
 ### :rotating_light: **Breaking Changes**
 
