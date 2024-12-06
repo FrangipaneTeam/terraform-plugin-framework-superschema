@@ -1,0 +1,3 @@
+```release-note:feature
+`Deprecated` - Added a new DeprecatedResource Struct in base schema.
+```
