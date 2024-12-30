@@ -1,3 +1,10 @@
+> [!IMPORTANT]
+> This repository has moved to `orange-cloudavenue` organization and is now read-only.
+> 
+> New location: https://github.com/orange-cloudavenue/terraform-plugin-framework-superschema
+
+---
+
 <div align="center">
     <a href="https://github.com/FrangipaneTeam/terraform-plugin-framework-superschema/releases/latest">
       <img alt="Latest release" src="https://img.shields.io/github/v/release/FrangipaneTeam/terraform-plugin-framework-superschema?style=for-the-badge&logo=starship&color=C9CBFF&logoColor=D9E0EE&labelColor=302D41&include_prerelease&sort=semver" />
